@@ -14,6 +14,7 @@
         <property name="product_price"></property>
         <property name="product_description"></property>
         <property name="product_image"></property>
+        <one-to-one name="category" cascade="all"></one-to-one>
 
         <joined-subclass name="model.products.Monitor" table="monitor">
             <key column="id_monitor"></key>
@@ -69,7 +70,6 @@
             <index column="ixd"></index>
             <one-to-many class="model.orders.OrderItem"/>
         </list>
-
     </class>
 
     <class name="model.orders.OrderItem" table="order_items">
@@ -98,6 +98,15 @@
             <one-to-many class="model.orders.Order"/>
         </list>
 
+
+    </class>
+
+    <class name="model.Category">
+        <id name="id_category">
+            <generator class="increment"></generator>
+        </id>
+
+        <property name="category_name"></property>
 
     </class>
 </hibernate-mapping>

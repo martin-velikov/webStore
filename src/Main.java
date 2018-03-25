@@ -1,9 +1,11 @@
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import javax.persistence.metamodel.EntityType;
 
@@ -32,6 +34,8 @@ public class Main {
         try {
             System.out.println("querying all the managed entities...");
             final Metamodel metamodel = session.getSessionFactory().getMetamodel();
+            //sessionObj = buildSessionFactory().openSession();
+
             for (EntityType<?> entityType : metamodel.getEntities()) {
                 final String entityName = entityType.getName();
                 final Query query = session.createQuery("from " + entityName);
@@ -44,4 +48,29 @@ public class Main {
             session.close();
         }
     }
+    private static SessionFactory buildSessionFactory() {
+
+        // Creating Configuration Instance & Passing Hibernate Configuration File
+
+        Configuration configObj = new Configuration();
+
+        configObj.configure("hibernate.cfg.xml");
+
+
+
+        // Since Hibernate Version 4.x, ServiceRegistry Is Being Used
+
+        ServiceRegistry serviceRegistryObj = new StandardServiceRegistryBuilder().applySettings(configObj.getProperties()).build();
+
+
+
+        // Creating Hibernate SessionFactory Instance
+
+        //sessionFactoryObj = configObj.buildSessionFactory(serviceRegistryObj);
+
+        return null;
+
+    }
+
+
 }
