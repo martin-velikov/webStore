@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="model.products.Product" table="product">
+        <id name="id_product">
+            <generator class="increment"></generator>
+        </id>
+
+        <property name="product_brand"></property>
+        <property name="product_model"></property>
+        <property name="product_quantity"></property>
+        <property name="product_price"></property>
+        <property name="product_description"></property>
+        <property name="product_image"></property>
+
+        <joined-subclass name="model.products.Monitor" table="monitor">
+            <key column="id_monitor"></key>
+            <property name="monitor_size"></property>
+            <property name="monitor_resolution"></property>
+            <property name="monitor_matrix"></property>
+        </joined-subclass>
+
+        <joined-subclass name="model.products.Component" table="components">
+            <key column="id_components"></key>
+        </joined-subclass>
+
+        <joined-subclass name="model.products.Accessory" table="accessory">
+            <key column="id_accessory"></key>
+        </joined-subclass>
+
+        <joined-subclass name="model.products.Networking" table="networking">
+            <key column="id_networking"></key>
+        </joined-subclass>
+
+        <joined-subclass name="model.products.Peripheral" table="peripherals">
+            <key column="id_peripherals"></key>
+        </joined-subclass>
+
+        <joined-subclass name="model.products.Computer" table="computers">
+            <key column="id_computers"></key>
+            <property name="computers_cpu"></property>
+            <property name="computers_vga"></property>
+            <property name="computers_ram"></property>
+            <property name="computers_hdd"></property>
+            <property name="computers_ssd"></property>
+
+            <joined-subclass name="model.products.PC" table="personal_computer">
+                <key column="id_pc"></key>
+                <property name="pc_psu"></property>
+                <property name="pc_mb"></property>
+            </joined-subclass>
+
+            <joined-subclass name="model.products.Laptop" table="laptop">
+                <key column="id_laptop"></key>
+            </joined-subclass>
+        </joined-subclass>
+    </class>
+
+    <class name="model.orders.Order" table="orders">
+    <id name="id_order">
+        <generator class="increment"></generator>
+    </id>
+        <property name="date"></property>
+        <property name="status"></property>
+        <list name="orderItems" cascade="all">
+            <key column="order_id"></key>
+            <index column="ixd"></index>
+            <one-to-many class="model.orders.OrderItem"/>
+        </list>
+
+    </class>
+
+    <class name="model.orders.OrderItem" table="order_items">
+        <id name="id_order_items">
+            <generator class="native"></generator>
+        </id>
+        <property name="quantity"></property>
+        <one-to-one name="product" cascade="all"></one-to-one>
+    </class>
+
+    <class name="model.User" table="users">
+        <id name="id_users">
+            <generator class="increment"></generator>
+        </id>
+
+        <property name="email"></property>
+        <property name="password"></property>
+        <property name="first_name"></property>
+        <property name="last_name"></property>
+        <property name="address"></property>
+        <property name="phone"></property>
+        <property name="picture"></property>
+        <list name="orders" cascade="all">
+            <key column="user_id"></key>
+            <index column="ixd"></index>
+            <one-to-many class="model.orders.Order"/>
+        </list>
+
+
+    </class>
+</hibernate-mapping>

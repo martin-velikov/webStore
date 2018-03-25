@@ -1,22 +1,26 @@
 package model;
 
-public class User {
+import model.orders.Order;
 
-    private long id;
+import java.util.List;
+
+public class User {
+    private long id_users;
     private String email;
     private String password;
-    private String firstName;
-    private String lastName;
-    private String phone;
+    private String first_name;
+    private String last_name;
     private String address;
-    private int idOrder;
+    private String phone;
+    private String picture;
+    private List<Order> orders;
 
-    public long getId() {
-        return id;
+    public long getId_users() {
+        return id_users;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId_users(long id_users) {
+        this.id_users = id_users;
     }
 
     public String getEmail() {
@@ -35,28 +39,20 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getAddress() {
@@ -67,11 +63,27 @@ public class User {
         this.address = address;
     }
 
-    public int getIdOrder() {
-        return idOrder;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

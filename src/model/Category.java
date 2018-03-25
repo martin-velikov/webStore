@@ -1,77 +1,22 @@
 package model;
 
 public class Category {
+    private long id_category;
+    private String category_name;
 
-    private int id;
-    private int idLaptop;
-    private int idComputers;
-    private int idComponents;
-    private int idPeripherals;
-    private int idNetworking;
-    private int idAccessory;
-    private int idMonitors;
-
-    public int getId() {
-        return id;
+    public long getId() {
+        return id_category;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(long id_category) {
+        this.id_category = id_category;
     }
 
-    public int getIdLaptop() {
-        return idLaptop;
+    public String getName() {
+        return category_name;
     }
 
-    public void setIdLaptop(int idLaptop) {
-        this.idLaptop = idLaptop;
-    }
-
-    public int getIdComputers() {
-        return idComputers;
-    }
-
-    public void setIdComputers(int idComputers) {
-        this.idComputers = idComputers;
-    }
-
-    public int getIdComponents() {
-        return idComponents;
-    }
-
-    public void setIdComponents(int idComponents) {
-        this.idComponents = idComponents;
-    }
-
-    public int getIdPeripherals() {
-        return idPeripherals;
-    }
-
-    public void setIdPeripherals(int idPeripherals) {
-        this.idPeripherals = idPeripherals;
-    }
-
-    public int getIdNetworking() {
-        return idNetworking;
-    }
-
-    public void setIdNetworking(int idNetworking) {
-        this.idNetworking = idNetworking;
-    }
-
-    public int getIdAccessory() {
-        return idAccessory;
-    }
-
-    public void setIdAccessory(int idAccessory) {
-        this.idAccessory = idAccessory;
-    }
-
-    public int getIdMonitors() {
-        return idMonitors;
-    }
-
-    public void setIdMonitors(int idMonitors) {
-        this.idMonitors = idMonitors;
+    public void setName(String category_name) {
+        this.category_name = category_name;
     }
 }
