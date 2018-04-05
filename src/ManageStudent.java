@@ -1,6 +1,5 @@
 import model.Category;
-import model.products.Computer;
-import model.products.PC;
+import model.products.Product;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,9 +21,9 @@ public class ManageStudent {
         ManageStudent MS = new ManageStudent();
 
      /* Add few student records in database */
-       // MS.add();
-        //MS.listStudents();
-       MS.delete(1);
+        MS.add();
+        MS.listStudents();
+//       MS.delete(1);
 
 //     /* List down all the students */
 //        MS.listStudents();
@@ -45,14 +44,13 @@ public class ManageStudent {
         Integer studentID = null;
         try{
             tx = session.beginTransaction();
-            Computer pece = new PC();
+            Product pece = new Product();
             pece.setComputers_cpu("Intel Core I120");
             pece.setComputers_hdd("1TB WD Blue");
-            Category category = new Category();
-            category.setCategory_name("Computers");
-            pece.setCategory(category);
             pece.setProduct_brand("Dell");
             pece.setProduct_price(200.99);
+
+            pece.setId_category(8);
             session.save(pece);
             tx.commit();
         }catch (HibernateException e) {
@@ -67,11 +65,12 @@ public class ManageStudent {
         Session session = factory.openSession();
         Transaction tx = null;
         try{
+
             tx = session.beginTransaction();
-            List computers = session.createQuery("FROM Computer ").list();
+            List computers = session.createQuery("FROM Product ").list();
             for (Iterator iterator =
                  computers.iterator(); iterator.hasNext();){
-                Computer pece = (Computer) iterator.next();
+                Product pece = (Product) iterator.next();
                 System.out.print("CPU: " + pece.getComputers_cpu());
                 System.out.print("  HDD: " + pece.getComputers_hdd());
                 System.out.println("  Category: " + pece.getCategory().getCategory_name());
@@ -110,7 +109,7 @@ public class ManageStudent {
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            PC pece = session.get(PC.class, id);
+            Product pece = session.get(Product.class, id);
             session.delete(pece);
             tx.commit();
         }catch (HibernateException e) {

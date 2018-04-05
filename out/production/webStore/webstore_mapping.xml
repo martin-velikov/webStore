@@ -14,49 +14,31 @@
         <property name="product_price"></property>
         <property name="product_description"></property>
         <property name="product_image"></property>
+        <property name="monitor_size"></property>
+        <property name="monitor_resolution"></property>
+        <property name="monitor_matrix"></property>
+        <property name="computers_cpu"></property>
+        <property name="computers_vga"></property>
+        <property name="computers_ram"></property>
+        <property name="computers_hdd"></property>
+        <property name="computers_ssd"></property>
+        <property name="pc_psu"></property>
+        <property name="pc_mb"></property>
+        <property name="id_category"></property>
+
         <one-to-one name="category" cascade="all"></one-to-one>
+    </class>
 
-        <joined-subclass name="model.products.Monitor" table="monitor">
-            <key column="id_monitor"></key>
-            <property name="monitor_size"></property>
-            <property name="monitor_resolution"></property>
-            <property name="monitor_matrix"></property>
-        </joined-subclass>
+    <class name="model.Category">
+        <id name="id_category">
+            <generator class="foreign">
+                <param name="property">product</param>
+            </generator>
+        </id>
 
-        <joined-subclass name="model.products.Component" table="components">
-            <key column="id_components"></key>
-        </joined-subclass>
+        <property name="category_name"></property>
 
-        <joined-subclass name="model.products.Accessory" table="accessory">
-            <key column="id_accessory"></key>
-        </joined-subclass>
-
-        <joined-subclass name="model.products.Networking" table="networking">
-            <key column="id_networking"></key>
-        </joined-subclass>
-
-        <joined-subclass name="model.products.Peripheral" table="peripherals">
-            <key column="id_peripherals"></key>
-        </joined-subclass>
-
-        <joined-subclass name="model.products.Computer" table="computers">
-            <key column="id_computers"></key>
-            <property name="computers_cpu"></property>
-            <property name="computers_vga"></property>
-            <property name="computers_ram"></property>
-            <property name="computers_hdd"></property>
-            <property name="computers_ssd"></property>
-
-            <joined-subclass name="model.products.PC" table="personal_computer">
-                <key column="id_pc"></key>
-                <property name="pc_psu"></property>
-                <property name="pc_mb"></property>
-            </joined-subclass>
-
-            <joined-subclass name="model.products.Laptop" table="laptop">
-                <key column="id_laptop"></key>
-            </joined-subclass>
-        </joined-subclass>
+        <one-to-one name="product" cascade="all"></one-to-one>
     </class>
 
     <class name="model.orders.Order" table="orders">
@@ -77,6 +59,7 @@
             <generator class="native"></generator>
         </id>
         <property name="quantity"></property>
+        <property name="price"></property>
         <one-to-one name="product" cascade="all"></one-to-one>
     </class>
 
@@ -97,16 +80,6 @@
             <index column="ixd"></index>
             <one-to-many class="model.orders.Order"/>
         </list>
-
-
     </class>
 
-    <class name="model.Category">
-        <id name="id_category">
-            <generator class="increment"></generator>
-        </id>
-
-        <property name="category_name"></property>
-
-    </class>
 </hibernate-mapping>

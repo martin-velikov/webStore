@@ -1,8 +1,19 @@
 package model;
 
+import model.products.Product;
+
 public class Category {
     private long id_category;
     private String category_name;
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public long getId_category() {
         return id_category;
