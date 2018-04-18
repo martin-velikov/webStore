@@ -20,16 +20,7 @@ public class Product {
     private String monitor_matrix;
     private String pc_psu;
     private String pc_mb;
-    private int id_category;
     private Category category;
-
-    public int getId_category() {
-        return id_category;
-    }
-
-    public void setId_category(int id_category) {
-        this.id_category = id_category;
-    }
 
     public long getId_product() {
         return id_product;

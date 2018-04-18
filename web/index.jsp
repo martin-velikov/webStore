@@ -41,7 +41,7 @@
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
-                                <li><a href="#"><i class="fa fa-user"></i> Влез в акаунт</a></li>      
+                                <li><a href="#"><i class="fa fa-user"></i> Влез в акаунт</a></li>
                         </ul>
                     </div>
                 </div>

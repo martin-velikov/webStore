@@ -1,4 +1,6 @@
 import model.Category;
+import model.orders.Order;
+import model.orders.OrderItem;
 import model.products.Product;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -41,7 +43,6 @@ public class ManageStudent {
     public void add(){
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer studentID = null;
         try{
             tx = session.beginTransaction();
             Product pece = new Product();
@@ -50,8 +51,17 @@ public class ManageStudent {
             pece.setProduct_brand("Dell");
             pece.setProduct_price(200.99);
 
-            pece.setId_category(8);
+            pece.setCategory(session.get(Category.class, Long.valueOf(5)));
+
+            OrderItem orderItem = new OrderItem();
+            Order order = new Order();
+            order.setOrderItems(order.getOrderItems());
+            orderItem.setProduct(pece);
+
             session.save(pece);
+            session.save(orderItem);
+            session.save(order);
+
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
@@ -76,6 +86,9 @@ public class ManageStudent {
                 System.out.println("  Category: " + pece.getCategory().getCategory_name());
                 System.out.println("  Brand: " + pece.getProduct_brand());
                 System.out.println("  Price: " + pece.getProduct_price());
+
+
+
             }
             tx.commit();
         }catch (HibernateException e) {
@@ -84,6 +97,24 @@ public class ManageStudent {
         }finally {
             session.close();
         }
+    }
+
+    public void addOrderItem() {
+        Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            OrderItem orderItem = new OrderItem();
+
+
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+
     }
 //    /* Method to UPDATE grade for a student */
 //    public void updateStudent(Integer studentID, float grade ){

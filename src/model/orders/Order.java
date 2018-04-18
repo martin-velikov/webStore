@@ -1,5 +1,7 @@
 package model.orders;
 
+import model.User;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +10,15 @@ public class Order {
     private Date date;
     private String status;
     private List<OrderItem> orderItems;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public long getId_order() {
         return id_order;
