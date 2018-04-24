@@ -30,7 +30,7 @@
 
     </class>
 
-    <class name="model.Category">
+    <class name="model.Category" table="category">
         <id name="id_category">
             <generator class="native"></generator>
         </id>
@@ -40,10 +40,11 @@
 
     <class name="model.orders.Order" table="orders">
     <id name="id_order">
-        <generator class="increment"></generator>
+        <generator class="native"></generator>
     </id>
         <property name="date"></property>
         <property name="status"></property>
+
         <many-to-one name="user" column="id_users" unique="true" not-null="true"/>
     </class>
 
@@ -56,9 +57,9 @@
         <many-to-one name="product" column="id_product" unique="true" not-null="true"/>
     </class>
 
-    <class name="model.User" table="user">
+    <class name="model.User" table="users">
         <id name="id_users">
-            <generator class="increment"></generator>
+            <generator class="native"></generator>
         </id>
 
         <property name="email"></property>
@@ -68,11 +69,7 @@
         <property name="address"></property>
         <property name="phone"></property>
         <property name="picture"></property>
-        <list name="orders" cascade="all">
-            <key column="user_id"></key>
-            <index column="ixd"></index>
-            <one-to-many class="model.orders.Order"/>
-        </list>
+
     </class>
 
 </hibernate-mapping>

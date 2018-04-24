@@ -1,4 +1,5 @@
 import model.Category;
+import model.User;
 import model.orders.Order;
 import model.orders.OrderItem;
 import model.products.Product;
@@ -23,8 +24,8 @@ public class ManageStudent {
         ManageStudent MS = new ManageStudent();
 
      /* Add few student records in database */
-        MS.add();
-        MS.listStudents();
+//        MS.add();
+//        MS.listStudents();
 //       MS.delete(1);
 
 //     /* List down all the students */
@@ -51,13 +52,18 @@ public class ManageStudent {
             pece.setProduct_brand("Dell");
             pece.setProduct_price(200.99);
 
-            pece.setCategory(session.get(Category.class, Long.valueOf(5)));
+            pece.setCategory(session.get(Category.class, Long.valueOf(2)));
 
             OrderItem orderItem = new OrderItem();
             Order order = new Order();
+            User user = new User();
+            user.setEmail("ivanskimeil@meil.me");
+            user.setId_users(2);
+            order.setUser(user);
             order.setOrderItems(order.getOrderItems());
             orderItem.setProduct(pece);
 
+            session.save(user);
             session.save(pece);
             session.save(orderItem);
             session.save(order);
