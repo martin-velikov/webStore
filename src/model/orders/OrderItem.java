@@ -1,9 +1,10 @@
 package model.orders;
 
+import dao.IDProvider;
 import model.products.Product;
 
 
-public class OrderItem {
+public class OrderItem implements IDProvider {
     private long id_order_items;
     private Product product;
     private int quantity;
@@ -39,5 +40,10 @@ public class OrderItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public Long getId() {
+        return id_order_items == 0 ? null : id_order_items;
     }
 }

@@ -1,8 +1,9 @@
 package model.products;
 
+import dao.IDProvider;
 import model.Category;
 
-public class Product {
+public class Product implements IDProvider {
     private long id_product;
     private String product_brand;
     private String product_model;
@@ -164,5 +165,10 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public Long getId() {
+        return id_product == 0 ? null : id_product;
     }
 }

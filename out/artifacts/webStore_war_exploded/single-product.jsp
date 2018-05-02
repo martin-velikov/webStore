@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ТехСвят - Моят технологичен свят</title>
+    <title>ТехСвят - моят технологичен свят</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
     
     <!-- Google Fonts -->
     <link href='css/titilium_font.css' rel='stylesheet' type='text/css'>
@@ -32,7 +33,7 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Моят акаунт</a></li>
+                            <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
                             <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
                         </ul>
                     </div>
@@ -41,7 +42,7 @@
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
-                                <li><a href="#"><i class="fa fa-user"></i> Влез в акаунт</a></li>
+                                <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,7 +55,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="img/logo.png"></a></h1>
+                        <h1><a href="index.jsp"><img src="/img/logo.png"></a></h1>
                     </div>
                 </div>
                 
@@ -72,11 +73,11 @@
             <div class="row">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.jsp">Начало</a></li>
-                        <li><a href="shop.jsp">Магазин</a></li>
+                        <li><a href="index.jsp">Начало</a></li>
+                        <li class="active"><a href="shop.jsp">Магазин</a></li>
                         <li><a href="cart.jsp">Количка</a></li>
                         <li><a href="#">Категории</a></li>
-                        <li><a href="#">Контакти</a></li>
+                        <li><a href="contacts.jsp">Контакти</a></li>
                     </ul>
                 </div>  
             </div>

@@ -5,23 +5,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ТехСвят - Моят технологичен свят</title>
+    <title>ТехСвят - моят технологичен свят</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
     
     <!-- Google Fonts -->
-    <link href='css/titilium_font.css' rel='stylesheet' type='text/css'>
+    <link href='/css/titilium_font.css' rel='stylesheet' type='text/css'>
     <link href='css/roboto_font.css' rel='stylesheet' type='text/css'>
     <link href='css/railway_font.css' rel='stylesheet' type='text/css'>
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 
   </head>
   <body>
@@ -32,7 +33,7 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Моят акаунт</a></li>
+                            <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
                             <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
                         </ul>
                     </div>
@@ -41,7 +42,7 @@
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
-                                <li><a href="#"><i class="fa fa-user"></i> Влез в акаунт</a></li>
+                                <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,7 +55,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="img/logo.png"></a></h1>
+                        <h1><a href="index.jsp"><img src="/img/logo.png"></a></h1>
                     </div>
                 </div>
                 
@@ -76,7 +77,7 @@
                         <li><a href="shop.jsp">Магазин</a></li>
                         <li><a href="cart.jsp">Количка</a></li>
                         <li><a href="#">Категории</a></li>
-                        <li><a href="#">Контакти</a></li>
+                        <li><a href="contacts.jsp">Контакти</a></li>
                     </ul>
                 </div>  
             </div>
@@ -88,7 +89,7 @@
 			<div class="block-slider block-slider4">
 				<ul class="" id="bxslider-home4">
 					<li>
-						<img src="img/h4-slide.jpg" alt="Slide">
+						<img src="/img/h4-slide.jpg" alt="Slide">
 						<div class="caption-group">
 							<h2 class="caption title">
 								Nvidia GeForce <span class="primary">1080 <strong>Ti</strong></span>
@@ -97,7 +98,7 @@
 							<a class="caption button-radius" href="#"><span class="icon"></span>Грабни сега !</a>
 						</div>
 					</li>
-					<li><img src="img/h4-slide2.jpg" alt="Slide">
+					<li><img src="/img/h4-slide2.jpg" alt="Slide">
 						<div class="caption-group">
 							<h2 class="caption title">
 								GB Z270X-GAMING 8 <span class="primary">LGA1151 </span>
@@ -105,7 +106,7 @@
 							<a class="caption button-radius" href="#"><span class="icon"></span>Грабни сега !</a>
 						</div>
 					</li>
-					<li><img src="img/h4-slide3.jpg" alt="Slide">
+					<li><img src="/img/h4-slide3.jpg" alt="Slide">
 						<div class="caption-group">
 							<h2 class="caption title">
 								Intel <span class="primary">Core <strong>i5</strong></span>
@@ -114,7 +115,7 @@
 							<a class="caption button-radius" href="#"><span class="icon"></span>Грабни сега !</a>
 						</div>
 					</li>
-					<li><img src="img/h4-slide4.jpg" alt="Slide">
+					<li><img src="/img/h4-slide4.jpg" alt="Slide">
 						<div class="caption-group">
 						  <h2 class="caption title">
 								Redragon  <span class="primary">Devarajas <strong>K556-RK RGB</strong></span>
@@ -170,7 +171,7 @@
                         <div class="product-carousel">
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-1.jpg" alt="">
+                                    <img src="/img/product-1.jpg" alt="">
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
                                         <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
@@ -185,7 +186,7 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-2.jpg" alt="">
+                                    <img src="/img/product-2.jpg" alt="">
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
                                         <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
@@ -199,7 +200,7 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-3.jpg" alt="">
+                                    <img src="/img/product-3.jpg" alt="">
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
                                         <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
@@ -214,7 +215,7 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-4.jpg" alt="">
+                                    <img src="/img/product-4.jpg" alt="">
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
                                         <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
@@ -229,7 +230,7 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-5.jpg" alt="">
+                                    <img src="/img/product-5.jpg" alt="">
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
                                         <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
@@ -244,7 +245,7 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-6.jpg" alt="">
+                                    <img src="/img/product-6.jpg" alt="">
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
                                         <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
@@ -271,14 +272,14 @@
                 <div class="col-md-12">
                     <div class="brand-wrapper">
                         <div class="brand-list">
-                            <img src="img/brand1.png" alt="">
-                            <img src="img/brand2.png" alt="">
-                            <img src="img/brand3.png" alt="">
-                            <img src="img/brand4.png" alt="">
-                            <img src="img/brand5.png" alt="">
-                            <img src="img/brand6.png" alt="">
-                            <img src="img/brand1.png" alt="">
-                            <img src="img/brand2.png" alt="">                            
+                            <img src="/img/brand1.png" alt="">
+                            <img src="/img/brand2.png" alt="">
+                            <img src="/img/brand3.png" alt="">
+                            <img src="/img/brand4.png" alt="">
+                            <img src="/img/brand5.png" alt="">
+                            <img src="/img/brand6.png" alt="">
+                            <img src="/img/brand1.png" alt="">
+                            <img src="/img/brand2.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -364,17 +365,17 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
     <!-- jQuery sticky menu -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
     
     <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.min.js"></script>
+    <script src="/js/jquery.easing.1.3.min.js"></script>
     
     <!-- Main Script -->
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     
     <!-- Slider -->
-    <script type="text/javascript" src="js/bxslider.min.js"></script>
-	<script type="text/javascript" src="js/script.slider.js"></script>
+    <script type="text/javascript" src="/js/bxslider.min.js"></script>
+	<script type="text/javascript" src="/js/script.slider.js"></script>
   </body>
 </html>

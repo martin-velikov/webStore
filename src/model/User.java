@@ -1,10 +1,11 @@
 package model;
 
+import dao.IDProvider;
 import model.orders.Order;
 
 import java.util.List;
 
-public class User {
+public class User implements IDProvider{
     private long id_users;
     private String email;
     private String password;
@@ -85,5 +86,10 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    @Override
+    public Long getId() {
+        return id_users == 0 ? null : id_users;
     }
 }

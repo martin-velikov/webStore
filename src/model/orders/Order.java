@@ -1,11 +1,12 @@
 package model.orders;
 
+import dao.IDProvider;
 import model.User;
 
 import java.util.Date;
 import java.util.List;
 
-public class Order {
+public class Order implements IDProvider {
     private long id_order;
     private Date date;
     private String status;
@@ -50,5 +51,10 @@ public class Order {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    @Override
+    public Long getId() {
+        return id_order == 0 ? null : id_order;
     }
 }

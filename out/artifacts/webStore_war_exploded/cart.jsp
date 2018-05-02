@@ -1,3 +1,6 @@
+<%@ page import="dao.ProductDao" %>
+<%@ page import="model.products.Product" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,23 +8,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ТехСвят - Моят технологичен свят</title>
+    <title>ТехСвят - моят технологичен свят</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
     
     <!-- Google Fonts -->
-    <link href='css/titilium_font.css' rel='stylesheet' type='text/css'>
-    <link href='css/roboto_font.css' rel='stylesheet' type='text/css'>
-    <link href='css/railway_font.css' rel='stylesheet' type='text/css'>
+    <link href='/css/titilium_font.css' rel='stylesheet' type='text/css'>
+    <link href='/css/roboto_font.css' rel='stylesheet' type='text/css'>
+    <link href='/css/railway_font.css' rel='stylesheet' type='text/css'>
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 
   </head>
   <body>
@@ -32,7 +36,7 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Моят акаунт</a></li>
+                            <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
                             <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
                         </ul>
                     </div>
@@ -41,7 +45,7 @@
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
-                                <li><a href="#"><i class="fa fa-user"></i> Влез в акаунт</a></li>
+                                <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,7 +58,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="img/logo.png"></a></h1>
+                        <h1><a href="index.jsp"><img src="/img/logo.png"></a></h1>
                     </div>
                 </div>
                 
@@ -72,11 +76,11 @@
             <div class="row">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.jsp">Начало</a></li>
+                        <li><a href="index.jsp">Начало</a></li>
                         <li><a href="shop.jsp">Магазин</a></li>
-                        <li><a href="cart.jsp">Количка</a></li>
+                        <li class="active"><a href="cart.jsp">Количка</a></li>
                         <li><a href="#">Категории</a></li>
-                        <li><a href="#">Контакти</a></li>
+                        <li><a href="contacts.jsp">Контакти</a></li>
                     </ul>
                 </div>  
             </div>
@@ -112,28 +116,28 @@
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Продукти</h2>
                         <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$800.00</del>
                             </div>                             
                         </div>
                         <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$800.00</del>
                             </div>                             
                         </div>
                         <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$800.00</del>
                             </div>                             
                         </div>
                         <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$800.00</del>
@@ -147,8 +151,24 @@
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
+                            <center>
+                            <%
+                                if(null!=request.getAttribute("successMessage"))
+                                {
+                                    out.println(request.getAttribute("successMessage"));
+                                    System.out.println(request.getAttribute("successMessage"));
+                                    for(Cookie cookie : request.getCookies()){
+                                        System.out.println(cookie.getName() + " : " + cookie.getValue());
+                                    }
+                                }
+                                if(null!=request.getAttribute("failMessage"))
+                                {
+                                    out.println(request.getAttribute("failMessage"));
+                                }
+                            %>
+                            </center>
                             <form method="post" action="#">
-                                <table cellspacing="0" class="shop_table cart">
+                                <table cellspacing="0" class="shop_table cart" id="cartTable">
                                     <thead>
                                         <tr>
                                             <th class="product-remove">&nbsp;</th>
@@ -160,39 +180,66 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="cart_item">
-                                            <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a> 
-                                            </td>
+                                        <%
+                                            Map<Long, Integer> idsToQuantitiesMap = new HashMap<>();
+                                            ProductDao productDao = ProductDao.getInstance();
+                                            if(request == null || request.getCookies() == null){
+                                                return;
+                                            }
+                                            for (Cookie cookie : request.getCookies()) {
+                                                try{
+                                                    idsToQuantitiesMap.put(Long.valueOf(cookie.getName()), Integer.valueOf(cookie.getValue()));
+                                                } catch (NumberFormatException e){
+                                                    continue;
+                                                }
 
-                                            <td class="product-thumbnail">
-                                                <a href="single-product.jsp"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/product-thumb-2.jpg"></a>
-                                            </td>
+                                            }
+                                            if(idsToQuantitiesMap.keySet().size() == 0){
+                                                //TODO message
+                                                return;
+                                            }
+                                            List<Product> productList = productDao.getProductsByIds(Arrays.asList(idsToQuantitiesMap.keySet().toArray(new Long[0])));
+                                            for (Product product : productList) {
+                                                out.println("                                        <tr class=\"cart_item\">\n" +
+                                                        "                                            <td class=\"product-remove\">\n" +
+                                                        "                                                <a title=\"Remove this item\" class=\"remove\" href=\"#\">×</a>\n" +
+                                                        "                                            </td>\n" +
+                                                        "\n" +
+                                                        "                                            <td class=\"product-thumbnail\">\n" +
+                                                        "                                                <a href=\"single-product.jsp\"><img width=\"145\" height=\"145\" alt=\"poster_1_up\" class=\"shop_thumbnail\" src=\"" + product.getProduct_image()+ "\"></a>\n" +
+                                                        "                                            </td>\n" +
+                                                        "\n" +
+                                                        "                                            <td class=\"product-name\">\n" +
+                                                        "                                                <a href=\"single-product.jsp\">" + product.getProduct_brand() + "\" \"" + product.getProduct_model() + "</a>\n" +
+                                                        "                                            </td>\n" +
+                                                        "\n" +
+                                                        "                                            <td class=\"product-price\">\n" +
+                                                        "                                                <span class=\"amount\">" + String.format("%.2f",product.getProduct_price()) + "лв</span>\n" +
+                                                        "                                            </td>\n" +
+                                                        "\n" +
+                                                        "                                            <td id=\"tdQuantity\" class=\"product-quantity\">\n" +
 
-                                            <td class="product-name">
-                                                <a href="single-product.jsp">Ship Your Idea</a>
-                                            </td>
+                                                        "                                                    " +
+                                                        "                                                    <input type=\"number\" size=\"4\" class=\"input-text qty text\" title=\"Qty\" value=\"" + idsToQuantitiesMap.get(product.getId())+ "\" min=\"0\" step=\"1\" id=\"quantity\" name=\"quantity\">\n" +
+                                                        "                                                    " +
 
-                                            <td class="product-price">
-                                                <span class="amount">£15.00</span> 
-                                            </td>
+                                                        "                                            </td>\n" +
+                                                        "\n"  +
+                                                        "                                            <td id=\"tdProductId\" class=\"product-subtotal\">\n" +
+                                                                "       <input type=\"hidden\" value=\"" + product.getId_product() + "\" id=\"productId\">" +
+                                                        "                                                <span class=\"amount\">" + String.format("%.2f", product.getProduct_price()* idsToQuantitiesMap.get(product.getId())) + "лв</span>\n" +
+                                                        "                                            </td>\n" +
+                                                        "                                        </tr>");
+                                            }
+                                        %>
 
-                                            <td class="product-quantity">
-                                                <div class="quantity buttons_added">
-                                                    <input type="button" class="minus" value="-">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                    <input type="button" class="plus" value="+">
-                                                </div>
-                                            </td>
-
-                                            <td class="product-subtotal">
-                                                <span class="amount">£15.00</span> 
-                                            </td>
-                                        </tr>
                                         <tr>
                                             <td class="actions" colspan="6">
-                                                <input type="submit" value="Обнови количката" name="update_cart" class="button">
-                                                <input type="submit" value="Поръчай" name="proceed" class="checkout-button button alt wc-forward">
+                                                <input type="submit" value="Обнови количката" name="update_cart"
+                                                       class="button" onclick="getValues('/ShoppingCartServlet')">
+                                                <input type="submit" value="Поръчай" name="proceed"
+                                                       class="checkout-button button alt wc-forward"
+                                                       onclick="getValues('/OrderServlet')">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -207,7 +254,7 @@
                                 <ul class="products">
                                     <li class="product">
                                         <a href="single-product.jsp">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-2.jpg">
+                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="/img/product-2.jpg">
                                             <h3>Ship Your Idea</h3>
                                             <span class="price"><span class="amount">£20.00</span></span>
                                         </a>
@@ -217,7 +264,7 @@
 
                                     <li class="product">
                                         <a href="single-product.jsp">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-4.jpg">
+                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="/img/product-4.jpg">
                                             <h3>Ship Your Idea</h3>
                                             <span class="price"><span class="amount">£20.00</span></span>
                                         </a>
@@ -227,7 +274,7 @@
 
                                      <li class="product">
                                         <a href="single-product.jsp">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-2.jpg">
+                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="/img/product-2.jpg">
                                             <h3>Ship Your Idea</h3>
                                             <span class="price"><span class="amount">£20.00</span></span>
                                         </a>
@@ -322,17 +369,42 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
     <!-- jQuery sticky menu -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
     
     <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.min.js"></script>
+    <script src="/js/jquery.easing.1.3.min.js"></script>
     
     <!-- Main Script -->
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     
     <!-- Slider -->
-    <script type="text/javascript" src="js/bxslider.min.js"></script>
-    <script type="text/javascript" src="js/script.slider.js"></script>
+    <script type="text/javascript" src="/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="/js/script.slider.js"></script>
+    <script>
+        function getValues(url) {
+
+            var idArray = [];
+            var quantityArray = [];
+            var table = document.getElementById("cartTable");
+            var rCount = table.rows.length;
+            for (var i = 1; i < rCount - 1; i++) {
+                var quantity = table.rows[i].cells[4].children[0].value;
+                var id = table.rows[i].cells[5].children[0].value;
+                //TODO put these values in arrays and call the ShoppingCardServlet
+                idArray.push(id);
+                quantityArray.push(quantity);
+            }
+            $.ajax({
+                url: url,
+                data: {
+                    ids: idArray,
+                    quantities: quantityArray,
+                    shouldAlter: true
+                },
+                type: 'POST'
+            });
+        }
+    </script>
   </body>
 </html>

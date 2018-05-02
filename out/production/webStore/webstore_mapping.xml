@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-mapping PUBLIC
-    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="model.products.Product" table="product">
         <id name="id_product">
@@ -32,20 +32,27 @@
 
     <class name="model.Category" table="category">
         <id name="id_category">
-            <generator class="native"></generator>
+            <generator class="increment"></generator>
         </id>
 
         <property name="category_name"></property>
     </class>
 
     <class name="model.orders.Order" table="orders">
-    <id name="id_order">
-        <generator class="native"></generator>
-    </id>
+        <id name="id_order">
+            <generator class="increment"></generator>
+        </id>
+
         <property name="date"></property>
         <property name="status"></property>
 
-        <many-to-one name="user" column="id_users" unique="true" not-null="true"/>
+        <many-to-one name="user" column="user_id" unique="true" not-null="true"/>
+
+        <list name="orderItems" cascade="all">
+            <key column="order_id" not-null="true"/>
+            <list-index column="idx"/>
+            <one-to-many class="model.orders.OrderItem"/>
+        </list>
     </class>
 
     <class name="model.orders.OrderItem" table="order_items">
@@ -54,12 +61,12 @@
         </id>
         <property name="quantity"></property>
         <property name="price"></property>
-        <many-to-one name="product" column="id_product" unique="true" not-null="true"/>
+        <many-to-one name="product" column="id_product" not-null="true"/>
     </class>
 
     <class name="model.User" table="users">
         <id name="id_users">
-            <generator class="native"></generator>
+            <generator class="increment"></generator>
         </id>
 
         <property name="email"></property>

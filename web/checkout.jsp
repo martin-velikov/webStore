@@ -5,23 +5,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ТехСвят - Моят технологичен свят</title>
+    <title>ТехСвят - моят технологичен свят</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
     
     <!-- Google Fonts -->
-    <link href='css/titilium_font.css' rel='stylesheet' type='text/css'>
-    <link href='css/roboto_font.css' rel='stylesheet' type='text/css'>
-    <link href='css/railway_font.css' rel='stylesheet' type='text/css'>
+    <link href='/css/titilium_font.css' rel='stylesheet' type='text/css'>
+    <link href='/css/roboto_font.css' rel='stylesheet' type='text/css'>
+    <link href='/css/railway_font.css' rel='stylesheet' type='text/css'>
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 
   </head>
   <body>
@@ -32,7 +33,7 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Моят акаунт</a></li>
+                            <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
                             <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
                         </ul>
                     </div>
@@ -41,7 +42,7 @@
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
-                                <li><a href="#"><i class="fa fa-user"></i> Влез в акаунт</a></li>
+                                <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,7 +55,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="img/logo.png"></a></h1>
+                        <h1><a href="index.jsp"><img src="/img/logo.png"></a></h1>
                     </div>
                 </div>
                 
@@ -72,11 +73,11 @@
             <div class="row">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.jsp">Начало</a></li>
+                        <li><a href="index.jsp">Начало</a></li>
                         <li><a href="shop.jsp">Магазин</a></li>
-                        <li><a href="cart.jsp">Количка</a></li>
+                        <li class="active"><a href="cart.jsp">Количка</a></li>
                         <li><a href="#">Категории</a></li>
-                        <li><a href="#">Контакти</a></li>
+                        <li><a href="contacts.jsp">Контакти</a></li>
                     </ul>
                 </div>  
             </div>
@@ -112,28 +113,28 @@
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Продукти</h2>
                         <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$100.00</del>
                             </div>                             
                         </div>
                         <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$100.00</del>
                             </div>                             
                         </div>
                         <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$100.00</del>
                             </div>                             
                         </div>
                         <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$100.00</del>
@@ -396,17 +397,17 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
     <!-- jQuery sticky menu -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
     
     <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.min.js"></script>
+    <script src="/js/jquery.easing.1.3.min.js"></script>
     
     <!-- Main Script -->
-    <script src="js/main.js"></script>
+    <script src="/js/main.js"></script>
     
     <!-- Slider -->
-    <script type="text/javascript" src="js/bxslider.min.js"></script>
-    <script type="text/javascript" src="js/script.slider.js"></script>
+    <script type="text/javascript" src="/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="/js/script.slider.js"></script>
   </body>
 </html>

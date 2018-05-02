@@ -1,8 +1,9 @@
 package model;
 
+import dao.IDProvider;
 import model.products.Product;
 
-public class Category {
+public class Category implements IDProvider {
     private long id_category;
     private String category_name;
     private Product product;
@@ -29,5 +30,10 @@ public class Category {
 
     public void setCategory_name(String category_name) {
         this.category_name = category_name;
+    }
+
+    @Override
+    public Long getId() {
+        return id_category == 0 ? null : id_category;
     }
 }
