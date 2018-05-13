@@ -24,8 +24,8 @@ public class ManageStudent {
             System.err.println("Failed to create sessionFactory object in Student class." + ex);
             throw new ExceptionInInitializerError(ex);
         }
-        ManageStudent MS = new ManageStudent();
-        MS.add();
+//        ManageStudent MS = new ManageStudent();
+//        MS.add();
      /* Add few student records in database */
 
 //        MS.add();

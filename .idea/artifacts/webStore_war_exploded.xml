@@ -9,7 +9,8 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Hibernate 5.2.14-5.2.14" />
-          <element id="file-copy" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.40-bin.jar" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.46" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.461" />
         </element>
       </element>
     </root>

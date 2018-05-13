@@ -20,6 +20,19 @@ public class ProductDao extends BaseDao<Product> {
         return instance;
     }
 
+    public Product getProductById(long id){
+        Session session = null;
+        try {
+            session = factory.openSession();
+
+           return session.get(Product.class, id);
+        }finally {
+            if(session != null){
+                session.close();
+            }
+        }
+    }
+
     public List<Product> getProductsByIds(List<Long> ids) {
         Session session = null;
         try {

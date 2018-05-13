@@ -103,9 +103,9 @@
             <div class="form-container form-container--small">
                 <form action="?" method="post" class="login-form">
                     <label for="email">Email:</label><br>
-                    <input type="text" class="form-control" placeholder="Моля, въведете вашият Email"><br>
+                    <input type="text" id="email" class="form-control" placeholder="Моля, въведете вашият Email" name="email"><br>
                     <label for="password">Парола:</label><br>
-                    <input type="password" class="form-control" placeholder="Моля, въведете вашата парола">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Моля, въведете вашата парола">
                     <input type="submit" class="btn-primary" value="Вход" name="">
                     <br><br>
                     <a href="register.jsp">Нямаш акаунт? Регистрирай се!</a>
@@ -198,7 +198,7 @@
     <!-- jQuery easing -->
     <script src="/js/jquery.easing.1.3.min.js"></script>
     
-    <!-- Main Script -->
+    <!-- Initializer Script -->
     <script src="/js/main.js"></script>
     
     <!-- Slider -->

@@ -230,7 +230,7 @@
     <!-- jQuery easing -->
     <script src="/js/jquery.easing.1.3.min.js"></script>
     
-    <!-- Main Script -->
+    <!-- Initializer Script -->
     <script src="/js/main.js"></script>
   </body>
 </html>
