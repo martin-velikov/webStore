@@ -453,7 +453,6 @@
         request.open("post", url, true);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
-                //TODO mahni vyrtqlkata
                 if (request.status === 200) {
                     document.getElementById("cartTable").innerHTML = this.responseText;
 
@@ -462,7 +461,6 @@
                 }
             }
         };
-        //TODO sloji vyrtqlka
         request.send(JSON.stringify(data));
     }
 </script>

@@ -1,3 +1,7 @@
+<%@ page import="model.User" %>
+<%@ page import="dao.ProductDao" %>
+<%@ page import="model.products.Product" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,7 +29,7 @@
     <link rel="stylesheet" href="/css/responsive.css">
 
   </head>
-  <body>
+  <body onload="getCartData()">
    
     <div class="header-area">
         <div class="container">
@@ -38,11 +42,16 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
-                                <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
+                                <%  User user = (User) session.getAttribute("User");
+                                    if(user != null){
+                                    out.println("Здравей, " + user.getFirst_name());
+                                } else {
+                                    out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
+                                    } %>
                         </ul>
                     </div>
                 </div>
@@ -61,7 +70,7 @@
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.jsp">Количка - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
                     </div>
                 </div>
             </div>
@@ -168,96 +177,35 @@
                 <div class="col-md-12">
                     <div class="latest-product">
                         <h2 class="section-title">Последни продукти</h2>
+                        <form action="/SingleProductServlet" method="post">
+                            <input type="hidden" name= "productId" value="4">
+                            <input type="submit" >kurec</input>
+                        </form>
+
                         <div class="product-carousel">
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="/img/product-1.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                        <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                    </div>
-                                </div>
-                                
-                                <h2><a href="single-product.jsp">Samsung Galaxy s5- 2015</a></h2>
-                                
-                                <div class="product-carousel-price">
-                                    <ins>$700.00</ins> <del>$100.00</del>
-                                </div> 
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="/img/product-2.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                        <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                    </div>
-                                </div>
-                                
-                                <h2>Nokia Lumia 1320</h2>
-                                <div class="product-carousel-price">
-                                    <ins>$899.00</ins> <del>$999.00</del>
-                                </div> 
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="/img/product-3.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                        <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                    </div>
-                                </div>
-                                
-                                <h2>LG Leon 2015</h2>
+                            <%
+                                ProductDao productDao = ProductDao.getInstance();
+                                List<Product> randomProducts = productDao.getRandomProducts(5);
+                                for(Product product : randomProducts){
+                                    out.println("<div class=\"single-product\">\n" +
+                                            "                                <div class=\"product-f-image\">\n" +
+                                            "                                    <img src=\"/img/product-1.jpg\" alt=\"\">\n" +
+                                            "                                    <div class=\"product-hover\">\n" +
+                                            "                                        <a href=\"#\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Добави в количката</a>\n" +
+                                            "                                        <a href=\"#\" class=\"view-details-link\" onclick=\"singleProduct("+ product.getId()+")\"><i class=\"fa fa-link\"></i> Информация</a>\n" +
+                                            "                                    </div>\n" +
+                                            "                                </div>\n" +
+                                            "                                \n" +
+                                            "                                <h2><a href=\"single-product.jsp\">" + product.getProduct_brand() + " " + product.getProduct_model() + "</a></h2>\n" +
+                                            "                                \n" +
+                                            "                                <div class=\"product-carousel-price\">\n" +
+                                            "                                    <ins>" + product.getProduct_price() + " лв</ins> <del>" + (product.getProduct_price()+((product.getProduct_price()/100)*10)) + " лв</del>\n" +
+                                            "                                </div> \n" +
+                                            "                            </div>\n" +
+                                            "                        ");
+                                }
 
-                                <div class="product-carousel-price">
-                                    <ins>$400.00</ins> <del>$425.00</del>
-                                </div>                                 
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="/img/product-4.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                        <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                    </div>
-                                </div>
-                                
-                                <h2><a href="single-product.jsp">Sony microsoft</a></h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$200.00</ins> <del>$225.00</del>
-                                </div>                            
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="/img/product-5.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                        <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                    </div>
-                                </div>
-                                
-                                <h2>iPhone 6</h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$1200.00</ins> <del>$1355.00</del>
-                                </div>                                 
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="/img/product-6.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                        <a href="single-product.jsp" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                    </div>
-                                </div>
-                                
-                                <h2><a href="single-product.jsp">Samsung gallaxy note 4</a></h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$400.00</ins>
-                                </div>                            
-                            </div>
+                            %>
                         </div>
                     </div>
                 </div>
@@ -377,5 +325,35 @@
     <!-- Slider -->
     <script type="text/javascript" src="/js/bxslider.min.js"></script>
 	<script type="text/javascript" src="/js/script.slider.js"></script>
+  
+  <%-- Cart --%>
+  <script>
+      function getCartData() {
+          var request = new XMLHttpRequest();
+          var cartData = { total: 0, quantity: 0};
+          document.cookie = "redirect=" + location.pathname;
+          request.open("get", "/ShoppingCartServlet", true);
+          request.onreadystatechange = function () {
+              if (request.readyState == 4) {
+                  if (request.status === 200) {
+                      cartData = JSON.parse(this.responseText);
+                      document.getElementById("cartTotal").innerHTML = cartData.total;
+                      document.getElementById("cartItems").innerHTML = cartData.quantity;
+
+                  } else {
+                      alert("omaza sa");
+                  }
+              }
+          };
+          request.send();
+      }
+  </script>
+  <script>
+      function singleProduct(productId) {
+          var request = new XMLHttpRequest();
+          request.open("post", "/SingleProductServlet", true);
+          request.send(JSON.stringify({productId: productId}));
+      }
+  </script>
   </body>
 </html>

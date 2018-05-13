@@ -5,9 +5,11 @@ import com.google.gson.reflect.TypeToken;
 import dao.OrderDao;
 import dao.ProductDao;
 import dao.UserDao;
+import model.User;
 import model.orders.Order;
 import model.orders.OrderItem;
 import model.products.Product;
+import org.hibernate.Session;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -71,7 +73,7 @@ public class OrderServlet extends HttpServlet {
 
         order.setOrderItems(orderItemList);
         order.setDate(new Date());
-        order.setUser(UserDao.getInstance().getAllEntities("User").get(0));
+        order.setUser((User) request.getSession().getAttribute("User"));
         OrderDao orderDao = OrderDao.getInstance();
         if(orderDao.insert(order) != null){
             for (Cookie cookie : request.getCookies()){

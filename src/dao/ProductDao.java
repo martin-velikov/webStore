@@ -4,7 +4,9 @@ import model.products.Product;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ProductDao extends BaseDao<Product> {
 
@@ -45,5 +47,32 @@ public class ProductDao extends BaseDao<Product> {
               session.close();
           }
        }
+    }
+    public List<Product> getRandomProducts(int count){
+        ProductDao productDao = ProductDao.getInstance();
+        List<Product> products = productDao.getAllEntities("Product");
+        List<Product> randomProducts = new ArrayList<>();
+        for (int i=0; i<count; i++) {
+            int index;
+            boolean shouldAdd;
+            do {
+                shouldAdd = true;
+                index = new Random().nextInt(products.size() - 1);
+                Product product = products.get(index);
+
+                for(Product product1 : randomProducts){
+                    if(product1.getId().equals(product.getId())){
+                        shouldAdd = false;
+                    }
+                }
+                if(shouldAdd){
+                    break;
+                }
+            }
+            while (true);
+
+            randomProducts.add(products.get(index));
+        }
+        return randomProducts;
     }
 }

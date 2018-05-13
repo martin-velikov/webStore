@@ -101,7 +101,7 @@
         
         <div class="container">
             <div class="form-container form-container--small">
-                <form action="?" method="post" class="login-form">
+                <form action="/LoginServlet" method="post" class="login-form">
                     <label for="email">Email:</label><br>
                     <input type="text" id="email" class="form-control" placeholder="Моля, въведете вашият Email" name="email"><br>
                     <label for="password">Парола:</label><br>

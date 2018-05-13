@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/responsive.css">
 
   </head>
-  <body>
+  <body onload="loadData()">
    
     <div class="header-area">
         <div class="container">
@@ -415,5 +415,30 @@
     <!-- Slider -->
     <script type="text/javascript" src="js/bxslider.min.js"></script>
     <script type="text/javascript" src="js/script.slider.js"></script>
+  <script>
+      function loadData() {
+          var request = new XMLHttpRequest();
+          var productData = {
+              id_product: 0,
+              product_brand: '',
+              product_model: '',
+              product_price: '',
+              product_description: ''
+          };
+          request.open("get", "/SingleProductServlet?id=", true);
+          request.onreadystatechange = function () {
+              if (request.readyState == 4) {
+                  if (request.status === 200) {
+                      productData = JSON.parse(this.responseText);
+                     alert(this.responseText);
+
+                  } else {
+                      alert("omaza sa");
+                  }
+              }
+          };
+          request.send();
+      }
+  </script>
   </body>
 </html>

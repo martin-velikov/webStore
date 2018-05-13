@@ -1,19 +1,25 @@
 package dao;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import javax.persistence.metamodel.EntityType;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-abstract class BaseDao<T extends IDProvider> {
+public abstract class BaseDao<T extends IDProvider> {
 
-    protected SessionFactory factory;
+    protected static SessionFactory factory;
 
     protected BaseDao() {
+        if(factory == null){
+            throw new RuntimeException(this.getClass().getCanonicalName() + " has not been intialized!");
+        }
+    }
+
+    public static void init(){
         factory = new Configuration().configure().buildSessionFactory();
     }
 
@@ -49,13 +55,13 @@ abstract class BaseDao<T extends IDProvider> {
     }
 
     public List<T> getAllEntities(String tableName) {
-            try (Session session = factory.openSession()) {
-                Query query = session.createQuery("from " + tableName);
-                return  query.list();
-            } catch (HibernateException e) {
-                e.printStackTrace();
-            }
-            return null;
+        try (Session session = factory.openSession()) {
+            Query query = session.createQuery("from " + tableName);
+            return query.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void update(T t) {
@@ -69,4 +75,6 @@ abstract class BaseDao<T extends IDProvider> {
             e.printStackTrace();
         }
     }
+
+
 }

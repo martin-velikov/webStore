@@ -1,5 +1,10 @@
 package servlet;
 
+import com.google.gson.Gson;
+import dao.ProductDao;
+import model.products.Product;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -7,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +70,38 @@ public class ShoppingCartServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int quantity = 0;
+        float total = 0;
+        String redirect = "";
+        for (Cookie cookie : request.getCookies()) {
+            if(cookie.getName().equals("redirect")){
+                redirect = cookie.getValue();
+                break;
+            }
+            try {
+                ProductDao productDao = ProductDao.getInstance();
+                Product product = productDao.getProductById(Long.valueOf(cookie.getName()));
+                total += product.getProduct_price()*Integer.parseInt(cookie.getValue());
+                quantity += Integer.parseInt(cookie.getValue());
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        CartResponse cartResponse = new CartResponse(quantity,total);
 
+        response.setStatus(200);
+        PrintWriter writer = response.getWriter();
+        writer.write(new Gson().toJson(cartResponse));
+        writer.close();
+        request.getRequestDispatcher(redirect).forward(request, response);
+    }
+
+    static class CartResponse{
+        int quantity;
+        float total;
+        CartResponse(int quantity, float total){
+          this.quantity = quantity;
+          this.total = total;
+        }
     }
 }
