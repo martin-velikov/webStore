@@ -3,7 +3,9 @@ package servlet;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+import dao.CategoryDao;
 import dao.ProductDao;
+import model.Category;
 import model.products.Product;
 
 import javax.servlet.RequestDispatcher;
@@ -31,14 +33,8 @@ public class SingleProductServlet extends HttpServlet {
         ProductDao productDao = ProductDao.getInstance();
         for(Cookie cookie : request.getCookies()){
             if(cookie.getName().equals("productId")){
-                Product product = productDao.getProductById(Long.valueOf(cookie.getValue()));
-                Product newProcuct = new Product();
-                newProcuct.setId_product(product.getId_product());
-                newProcuct.setProduct_brand(product.getProduct_brand());
-                newProcuct.setProduct_model(product.getProduct_model());
-                newProcuct.setProduct_description(product.getProduct_description());
-                newProcuct.setProduct_price(product.getProduct_price());
-                String json = new Gson().toJson(newProcuct);
+                Product product = productDao.getProductCopy(Long.valueOf(cookie.getValue()));
+                String json = new Gson().toJson(product);
                 PrintWriter printWriter = response.getWriter();
                 printWriter.write(json);
                 printWriter.close();

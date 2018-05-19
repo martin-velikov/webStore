@@ -1,5 +1,6 @@
 package dao;
 
+import model.Category;
 import model.products.Product;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -74,5 +75,27 @@ public class ProductDao extends BaseDao<Product> {
             randomProducts.add(products.get(index));
         }
         return randomProducts;
+    }
+
+    public Product getProductCopy(long id){
+        Session session = null;
+        try {
+            session = factory.openSession();
+            Product product = session.get(Product.class, id);
+            Product newProcuct = new Product();
+            newProcuct.setId_product(product.getId_product());
+            newProcuct.setProduct_brand(product.getProduct_brand());
+            newProcuct.setProduct_model(product.getProduct_model());
+            newProcuct.setProduct_description(product.getProduct_description());
+            newProcuct.setProduct_price(product.getProduct_price());
+            Category category = new Category();
+            category.setCategory_name(product.getCategory().getCategory_name());
+            newProcuct.setCategory(category);
+            return newProcuct;
+        }finally {
+            if(session != null){
+                session.close();
+            }
+        }
     }
 }

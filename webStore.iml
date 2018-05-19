@@ -30,7 +30,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.5.11" level="application_server_libraries" />
     <orderEntry type="library" exported="" name="Hibernate 5.2.14-5.2.14" level="project" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/mysql-connector-java-5.1.40-bin.jar!/" />
@@ -39,8 +39,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mysql-connector-java-5.1.46" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.461" level="project" />
-    <orderEntry type="library" name="gson-2.6.2" level="application" />
+    <orderEntry type="library" exported="" name="gson-2.6.2" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.46" level="application" />
   </component>
 </module>
