@@ -199,8 +199,8 @@
                                             <div role="tabpanel" class="tab-pane fade" id="profile">
                                                 <h2>Отзиви</h2>
                                                 <div class="submit-review">
-                                                    <p><label for="name">Име</label> <input name="name" type="text"></p>
-                                                    <p><label for="email">Email</label> <input name="email" type="email"></p>
+                                                    <p><label for="name">Име</label> <input name="name" id="name" type="text"></p>
+                                                    <p><label for="email">Email</label> <input name="email" id="email" type="email"></p>
                                                     <div class="rating-chooser">
                                                         <p>Вашият рейтинг</p>
 
@@ -212,7 +212,7 @@
                                                             <i class="fa fa-star"></i>
                                                         </div>
                                                     </div>
-                                                    <p><label for="review">Вашият отзив</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
+                                                    <p><label for="review">Вашият отзив</label> <textarea name="review" id="review" cols="30" rows="10"></textarea></p>
                                                     <p><input type="submit" value="Изпрати"></p>
                                                 </div>
                                             </div>
@@ -431,8 +431,7 @@
               if (request.readyState == 4) {
                   if (request.status === 200) {
                       productData = JSON.parse(this.responseText);
-                      //TODO document.getElementById(maikati).innerHTML = productData.productBrand primerno... i t.n.
-                      alert(this.responseText);
+
                       document.getElementById("product-name").innerHTML = productData.product_brand + " " + productData.product_model;
                       document.getElementById("product-price").innerHTML = productData.product_price + "лв";
                       document.getElementById("product-category").innerHTML = productData.category.category_name;

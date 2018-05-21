@@ -63,7 +63,7 @@ public class OrderServlet extends HttpServlet {
         List<OrderItem> orderItemList = new ArrayList<>();
         ProductDao productDao = ProductDao.getInstance();
         for(OrderModel orderModel : list){
-            Product product = productDao.getProductById(orderModel.id);
+            Product product = productDao.getProductCopy(orderModel.id);
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
             orderItem.setPrice(product.getProduct_price());

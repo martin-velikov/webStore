@@ -27,6 +27,42 @@
     <link rel="stylesheet" href="/css/owl.carousel.css">
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <!-- Latest jQuery form server -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="/js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Initializer Script -->
+    <script src="/js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="/js/script.slider.js"></script>
+
+    <script>
+        function searchProducts() {
+            var search = document.getElementById("searchBar").value;
+
+            if (search == '' || search == null) {
+                return;
+            }
+            $.ajax({
+                url: '/SearchServlet',
+                data: {
+                    searchProducts: search
+                },
+                type: 'POST'
+            });
+        }
+    </script>
 
 
 </head>
@@ -110,10 +146,11 @@
             <div class="col-md-4">
                 <div class="single-sidebar">
                     <h2 class="sidebar-title">Търсене</h2>
-                    <form action="#">
-                        <input type="text" placeholder="Какво търсите днес?">
-                        <input type="submit" value="Намери">
+                    <form action="/SearchServlet" method="post">
+                        <input type="text" id="searchBar" name="searchProducts" placeholder="Какво търсите днес?">
+                    <input type="submit" value="Намери">
                     </form>
+
                 </div>
 
                 <div class="single-sidebar">
@@ -206,7 +243,7 @@
                                 for (Product product : productList) {
                                     out.println("                                        <tr class=\"cart_item\">\n" +
                                             "                                            <td class=\"product-remove\">\n" +
-                                            "                                                <a title=\"Remove this item\" class=\"remove\" href=\"#\">×</a>\n" +
+                                            "                                                <a title=\"Remove this item\" class=\"remove\" href=\"#\" onclick=\"removeItem("+product.getId()+");\">×</a>\n" +
                                             "                                            </td>\n" +
                                             "\n" +
                                             "                                            <td class=\"product-thumbnail\">\n" +
@@ -243,7 +280,7 @@
                                            class="button" onclick="getValues('/ShoppingCartServlet')">
                                     <button type="button" value="Поръчай" name="proceed"
                                             class="checkout-button button"
-                                            onclick="/*getValues('/OrderServlet'); refreshPage();*/order('/OrderServlet');">
+                                            onclick="order('/OrderServlet');">
                                         Поръчай
                                     </button>
                                 </td>
@@ -381,25 +418,7 @@
     </div>
 </div> <!-- End footer bottom area -->
 
-<!-- Latest jQuery form server -->
-<script src="https://code.jquery.com/jquery.min.js"></script>
 
-<!-- Bootstrap JS form CDN -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-<!-- jQuery sticky menu -->
-<script src="/js/owl.carousel.min.js"></script>
-<script src="/js/jquery.sticky.js"></script>
-
-<!-- jQuery easing -->
-<script src="/js/jquery.easing.1.3.min.js"></script>
-
-<!-- Initializer Script -->
-<script src="/js/main.js"></script>
-
-<!-- Slider -->
-<script type="text/javascript" src="/js/bxslider.min.js"></script>
-<script type="text/javascript" src="/js/script.slider.js"></script>
 <script>
     function getValues(url) {
 
@@ -462,6 +481,36 @@
             }
         };
         request.send(JSON.stringify(data));
+    }
+</script>
+<script>
+    function removeItem(id) {
+        var cookies = get_cookies_array();
+        for(var name in cookies) {
+            if(name == id){
+                document.cookie = name + '=; Max-Age=0';
+                location.reload();
+            }
+        }
+    }
+</script>
+
+<script>
+    function get_cookies_array() {
+
+        var cookies = { };
+
+        if (document.cookie && document.cookie != '') {
+            var split = document.cookie.split(';');
+            for (var i = 0; i < split.length; i++) {
+                var name_value = split[i].split("=");
+                name_value[0] = name_value[0].replace(/^ /, '');
+                cookies[decodeURIComponent(name_value[0])] = decodeURIComponent(name_value[1]);
+            }
+        }
+
+        return cookies;
+
     }
 </script>
 </body>
