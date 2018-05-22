@@ -118,7 +118,7 @@
                     <li><a href="index.jsp">Начало</a></li>
                     <li><a href="shop.jsp">Магазин</a></li>
                     <li class="active"><a href="cart.jsp">Количка</a></li>
-                    <li><a href="#">Категории</a></li>
+                    <li><a href="categories.jsp">Категории</a></li>
                     <li><a href="contacts.jsp">Контакти</a></li>
                 </ul>
             </div>

@@ -78,7 +78,7 @@
                         <li><a href="index.jsp">Начало</a></li>
                         <li class="active"><a href="shop.jsp">Магазин</a></li>
                         <li><a href="cart.jsp">Количка</a></li>
-                        <li><a href="#">Категории</a></li>
+                        <li><a href="categories.jsp">Категории</a></li>
                         <li><a href="contacts.jsp">Контакти</a></li>
                     </ul>
                 </div>  
@@ -128,32 +128,6 @@
                     }
                 %>
             </div>
-            
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="product-pagination text-center">
-                        <nav>
-                          <ul class="pagination">
-                            <li>
-                              <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                              </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </nav>                        
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -179,11 +153,10 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Навигация </h2>
                         <ul>
-                            <li><a href="#">Моят акаунт</a></li>
-                            <li><a href="#">Моята количка</a></li>
-                            <li><a href="#">История на поръчките</a></li>
-                            <li><a href="#">Магазин</a></li>
-                            <li><a href="#">Контакти</a></li>
+                            <li><a href="user.jsp">Моят акаунт</a></li>
+                            <li><a href="cart.jsp">Моята количка</a></li>
+                            <li><a href="shop.jsp">Магазин</a></li>
+                            <li><a href="contacts.jsp">Контакти</a></li>
                         </ul>                        
                     </div>
                 </div>

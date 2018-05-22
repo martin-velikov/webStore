@@ -23,10 +23,19 @@ import java.util.List;
 @WebServlet("/SingleProductServlet")
 public class SingleProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/single-product.jsp");
-        Cookie cookie = new Cookie("productId", request.getParameter("productId"));
-        response.addCookie(cookie);
-        requestDispatcher.forward(request, response);
+        StringBuffer jb = new StringBuffer();
+        String line = null;
+        try {
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null)
+                jb.append(line);
+        } catch (Exception e) { /*report an error*/ }
+        Response resp = null;
+        try{
+            resp = new Gson().fromJson(jb.toString(), new TypeToken<Response>() {}.getType());
+            Cookie cookie = new Cookie("productId", String.valueOf(resp.productId));
+            response.addCookie(cookie);
+        }catch (Exception e) { }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -27,6 +27,84 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
 
+      <!-- Latest jQuery form server -->
+      <script src="https://code.jquery.com/jquery.min.js"></script>
+
+      <!-- Bootstrap JS form CDN -->
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+      <!-- jQuery sticky menu -->
+      <script src="/js/owl.carousel.min.js"></script>
+      <script src="/js/jquery.sticky.js"></script>
+
+      <!-- jQuery easing -->
+      <script src="/js/jquery.easing.1.3.min.js"></script>
+
+      <!-- Initializer Script -->
+      <script src="/js/main.js"></script>
+      <script>
+          function getSearch() {
+              var request = new XMLHttpRequest();
+              var productData = [{
+                  id_product: 0,
+                  product_brand: '',
+                  product_model: '',
+                  product_price: '',
+                  product_description: '',
+                  product_image: '',
+                  category: { id_category: '', category_name: ''}
+              }];
+              request.open("get", "/SearchServlet", true);
+              request.onreadystatechange = function () {
+                  if (request.readyState == 4) {
+                      if (request.status === 200) {
+                          productData = JSON.parse(this.responseText);
+                          //TODO loop the productData array and fill the HTML fields
+                          if (productData.length != 0) {
+                              for(var i = 0; i < productData.length; i++) {
+                                  var image = productData[i].product_image;
+                                  var brand = productData[i].product_brand;
+                                  var model = productData[i].product_model;
+                                  var price = productData[i].product_price;
+                                  var id = productData[i].id_product;
+
+                                  document.getElementById("searchProduct").innerHTML += "<div class=\"col-md-3 col-sm-6\">" +
+                                      "<div class=\"single-shop-product\">" +
+                                      "<form action=\"ShoppingCartServlet\" method=\"POST\">" +
+                                      "<div class=\"product-upper\">" +
+                                      "<img src=\""+image+"\">" +
+                                      "</div>" +
+                                      "<h2><a href=\"#\">"+brand+" "+model+"</a></h2>" +
+                                      "<div class=\"product-carousel-price\">" +
+                                      "<ins>"+ price+"лв</ins>"+
+                                      "</div>" +
+                                      "<div class=\"product-option-shop\">" +
+                                      "<input type=\"hidden\" value=\"\" + "+id+" name=\"id\">" +
+                                      "<input type=\"hidden\" value=\"1\" name=\"quantity\">" +
+                                      "<input type=\"hidden\" value=\"false\" name=\"shouldAlter\">" +
+                                      "<input type=\"Submit\" class=\"add_to_cart_button\" value=\"Добави в количката\" >" +
+                                      "</div>" +
+                                      "</form>" +
+                                      "</div>" +
+                                      "</div>";
+                              }
+                          }
+                          else {
+                              document.getElementById("searchProduct").innerHTML = "<h3 style='color: #c9302c'>Няма намерени продукти!</h3>" +
+                              "<input type=\"Submit\" class=\"add_to_cart_button\" value=\"Върни ме\" onclick='window.history.back()'>";
+
+                          }
+
+
+                      } else {
+                          alert("omaza sa");
+                      }
+                  }
+              };
+              request.send();
+          }
+      </script>
+
   </head>
   <body onload="getSearch();">
    
@@ -104,7 +182,8 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                <div class="searchProduct">
+                <center><h1>Намерени продукти:</h1></center>
+                <div class="searchProduct" id="searchProduct">
 
                 </div>
             </div>
@@ -171,46 +250,6 @@
         </div>
     </div> <!-- End footer top area -->
    
-    <!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
-    
-    <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
-    <!-- jQuery sticky menu -->
-    <script src="/js/owl.carousel.min.js"></script>
-    <script src="/js/jquery.sticky.js"></script>
-    
-    <!-- jQuery easing -->
-    <script src="/js/jquery.easing.1.3.min.js"></script>
-    
-    <!-- Initializer Script -->
-    <script src="/js/main.js"></script>
-  <script>
-      function getSearch() {
-          var request = new XMLHttpRequest();
-          var productData = [{
-              id_product: 0,
-              product_brand: '',
-              product_model: '',
-              product_price: '',
-              product_description: '',
-              category: { id_category: '', category_name: ''}
-          }];
-          request.open("get", "/SearchServlet", true);
-          request.onreadystatechange = function () {
-              if (request.readyState == 4) {
-                  if (request.status === 200) {
-                      productData = JSON.parse(this.responseText);
-                      //TODO loop the productData array and fill the HTML fields
 
-                  } else {
-                      alert("omaza sa");
-                  }
-              }
-          };
-          request.send();
-      }
-  </script>
   </body>
 </html>

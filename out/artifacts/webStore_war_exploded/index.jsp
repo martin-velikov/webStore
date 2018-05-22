@@ -25,7 +25,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
 
   </head>
@@ -177,22 +177,25 @@
                 <div class="col-md-12">
                     <div class="latest-product">
                         <h2 class="section-title">Последни продукти</h2>
-                        <form action="/SingleProductServlet" method="post">
-                            <input type="hidden" name= "productId" value="4">
-                            <input type="submit" >kurec</input>
-                        </form>
+                        <%--<form action="/SingleProductServlet" method="post">--%>
+                            <%--<input type="hidden" name= "productId" value="4">--%>
+                            <%--<input type="submit" >kurec</input>--%>
+                        <%--</form>--%>
 
                         <div class="product-carousel">
                             <%
                                 ProductDao productDao = ProductDao.getInstance();
                                 List<Product> randomProducts = productDao.getRandomProducts(5);
                                 for(Product product : randomProducts){
-                                    out.println("<div class=\"single-product\">\n" +
+                                    out.println(
+                                            "<form action=\"/SingleProductServlet\" method=\"post\" id=\"singleProductForm\">"+
+                                            "<div class=\"single-product\">\n" +
                                             "                                <div class=\"product-f-image\">\n" +
                                             "                                    <img src=\"/img/product-1.jpg\" alt=\"\">\n" +
                                             "                                    <div class=\"product-hover\">\n" +
+                                            "                                        <input type=\"hidden\" name=\"productId\" value=\""+product.getId()+"\">" +
                                             "                                        <a href=\"#\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Добави в количката</a>\n" +
-                                            "                                        <a href=\"#\" class=\"view-details-link\" onclick=\"singleProduct("+ product.getId()+")\"><i class=\"fa fa-link\"></i> Информация</a>\n" +
+                                            "                                        <a class=\"view-details-link\" onclick=\"singleProduct("+product.getId()+");\"><i class=\"fa fa-link\"></i>Информация</a>\n" +
                                             "                                    </div>\n" +
                                             "                                </div>\n" +
                                             "                                \n" +
@@ -202,9 +205,8 @@
                                             "                                    <ins>" + product.getProduct_price() + " лв</ins> <del>" + (product.getProduct_price()+((product.getProduct_price()/100)*10)) + " лв</del>\n" +
                                             "                                </div> \n" +
                                             "                            </div>\n" +
-                                            "                        ");
+                                            "</form>                    ");
                                 }
-
                             %>
                         </div>
                     </div>
@@ -353,7 +355,16 @@
           var request = new XMLHttpRequest();
           request.open("post", "/SingleProductServlet", true);
           request.send(JSON.stringify({productId: productId}));
+          location.href = 'single-product.jsp';
       }
   </script>
+  <%--<script>--%>
+      <%--$(document).ready(function() {--%>
+          <%--$(".single-product").on("click", ".view-details-link", function(event) {--%>
+              <%--var id = $(".productId").val();--%>
+              <%--alert(id);--%>
+          <%--});--%>
+      <%--});--%>
+  <%--</script>--%>
   </body>
 </html>
