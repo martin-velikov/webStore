@@ -1,3 +1,7 @@
+<%@ page import="model.User" %>
+<%@ page import="dao.ProductDao" %>
+<%@ page import="model.products.Product" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,31 +28,50 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
 
+      <script>
+          function singleProduct(productId) {
+              var request = new XMLHttpRequest();
+              request.open("post", "/SingleProductServlet", true);
+              request.send(JSON.stringify({productId: productId}));
+              location.href = 'single-product.jsp';
+          }
+      </script>
+
   </head>
   <body onload="loadData()">
-   
-    <div class="header-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="user-menu">
-                        <ul>
-                            <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
-                            <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="header-right">
-                        <ul class="list-unstyled list-inline">
-                                <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End header area -->
+
+  <div class="header-area">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="user-menu">
+                      <ul>
+                          <%User user = (User) session.getAttribute("User"); %>
+                          <% if (user != null) {
+                              out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i> Моят акаунт</a></li>");
+                          }%>
+                          <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="header-right">
+                      <ul class="list-unstyled list-inline">
+                          <%
+                              if(user != null){
+                                  out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравей, " + user.getFirst_name()+"</a></li>" +
+                                          "<li><a onclick=\"logout();\" style=\"cursor: pointer;\">Изход от акаунт</a></li>");
+                              } else {
+                                  out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
+                              }
+                          %>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> <!-- End header area -->
     
     <div class="site-branding-area">
         <div class="container">
@@ -61,7 +84,7 @@
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.jsp">Количка - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
                     </div>
                 </div>
             </div>
@@ -112,34 +135,19 @@
                     
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Продукти</h2>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
-                        </div>
+                        <%
+                            ProductDao productDao = ProductDao.getInstance();
+                            List<Product> randomProducts = productDao.getRandomProducts(4);
+                            for(Product product : randomProducts) {
+                                out.println("<div class=\"thubmnail-recent\">" +
+                                        "<img src=\"" + product.getProduct_image() + "\" class=\"recent-thumb\">" +
+                                        "<h2><a onclick=\"singleProduct("+product.getId()+");\">" + product.getProduct_brand() + "" + " " + product.getProduct_model() + "</a></h2>" +
+                                        "<div class=\"product-sidebar-price\">" +
+                                        "<ins>" + product.getProduct_price() + "" + " лв.</ins>" +
+                                        "</div>" +
+                                        "</div>");
+                            }
+                        %>
                     </div>
                 </div>
                 
@@ -147,8 +155,8 @@
                     <div class="product-content-right">
                         <div class="product-breadcroumb">
                             <a href="">Home</a>
-                            <a href="">Category Name</a>
-                            <a href="">Sony Smart TV - 2015</a>
+                            <a href="" id="nav-categoryName">Category Name</a>
+                            <a href="" id="nav-ProductName">Sony Smart TV - 2015</a>
                         </div>
                         
                         <div class="row">
@@ -227,94 +235,29 @@
                         <div class="related-products-wrapper">
                             <h2 class="related-products-title">Още продукти</h2>
                             <div class="related-products-carousel">
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-1.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Sony Smart TV - 2015</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$700.00</ins> <del>$100.00</del>
-                                    </div> 
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-2.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Apple new mac book 2015 March :P</a></h2>
-                                    <div class="product-carousel-price">
-                                        <ins>$899.00</ins> <del>$999.00</del>
-                                    </div> 
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-3.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Apple new i phone 6</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$400.00</ins> <del>$425.00</del>
-                                    </div>                                 
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-4.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Sony playstation microsoft</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$200.00</ins> <del>$225.00</del>
-                                    </div>                            
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-5.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Sony Smart Air Condtion</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$1200.00</ins> <del>$1355.00</del>
-                                    </div>                                 
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/product-6.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Добави в количката</a>
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Информация</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Samsung gallaxy note 4</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$400.00</ins>
-                                    </div>                            
+                                <%
+                                    for(Product product : randomProducts) {
+                                        out.println(
+                                                "<form action=\"/SingleProductServlet\" method=\"post\" id=\"singleProductForm\">"+
+                                                        "<div class=\"single-product\">\n" +
+                                                        "                                <div class=\"product-f-image\">\n" +
+                                                        "                                    <img src=\"/img/product-1.jpg\" alt=\"\">\n" +
+                                                        "                                    <div class=\"product-hover\">\n" +
+                                                        "                                        <input type=\"hidden\" name=\"productId\" value=\""+product.getId()+"\">" +
+                                                        "                                        <a href=\"#\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Добави в количката</a>\n" +
+                                                        "                                        <a class=\"view-details-link\" onclick=\"singleProduct("+product.getId()+");\"><i class=\"fa fa-link\"></i>Информация</a>\n" +
+                                                        "                                    </div>\n" +
+                                                        "                                </div>\n" +
+                                                        "                                \n" +
+                                                        "                                <h2><a href=\"single-product.jsp\">" + product.getProduct_brand() + " " + product.getProduct_model() + "</a></h2>\n" +
+                                                        "                                \n" +
+                                                        "                                <div class=\"product-carousel-price\">\n" +
+                                                        "                                    <ins>" + product.getProduct_price() + " лв</ins> <del>" + (product.getProduct_price()+((product.getProduct_price()/100)*10)) + " лв</del>\n" +
+                                                        "                                </div> \n" +
+                                                        "                            </div>\n" +
+                                                        "</form>                    ");
+                                    }
+                                %>
                                 </div>                                    
                             </div>
                         </div>
@@ -325,64 +268,64 @@
     </div>
 
 
-    <div class="footer-top-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-about-us">
-                        <h2>тех<span>Свят</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
-                        <div class="footer-social">
-                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Навигация </h2>
-                        <ul>
-                            <li><a href="#">Моят акаунт</a></li>
-                            <li><a href="#">Моята количка</a></li>
-                            <li><a href="#">История на поръчките</a></li>
-                            <li><a href="#">Магазин</a></li>
-                            <li><a href="#">Контакти</a></li>
-                        </ul>                        
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Категории</h2>
-                        <ul>
-                            <li><a href="#">Настолни компютри</a></li>
-                            <li><a href="#">Лаптопи</a></li>
-                            <li><a href="#">Ъпгрейд</a></li>
-                            <li><a href="#">Периферия</a></li>
-                            <li><a href="#">Wireless and Networking</a></li>
-                        </ul>                        
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-newsletter">
-                        <h2 class="footer-wid-title">Вестник</h2>
-                        <p>Абонирайте се за нашият вестник и получавайте винаги най-новите и актуални оферти от нас!</p>
-                        <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" placeholder="Въведете вашият имейл">
-                                <input type="submit" value="Абонирай се">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End footer top area -->
+  <div class="footer-top-area">
+      <div class="zigzag-bottom"></div>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-3 col-sm-6">
+                  <div class="footer-about-us">
+                      <h2>тех<span>Свят</span></h2>
+                      <p>ТехСвят разполага с огромно разнообразие от продукти, както за обикновения потребител, така и за хардуерни ентусиасти! Заповядайте и разгледайте богатият ни асортимент от компютърни и мрежови компоненти, аксесоари и много други! Ниските цени са предимство да изберете нас!</p>
+                      <div class="footer-social">
+                          <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                          <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                          <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                          <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                  <div class="footer-menu">
+                      <h2 class="footer-wid-title">Навигация </h2>
+                      <ul>
+                          <li><a href="user.jsp">Моят акаунт</a></li>
+                          <li><a href="cart.jsp">Моята количка</a></li>
+                          <li><a href="shop.jsp">Магазин</a></li>
+                          <li><a href="categories.jsp">Категории</a></li>
+                          <li><a href="contacts.jsp">Контакти</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                  <div class="footer-menu">
+                      <h2 class="footer-wid-title">Категории</h2>
+                      <ul>
+                          <li><a href="categories.jsp">Настолни компютри</a></li>
+                          <li><a href="categories.jsp">Лаптопи</a></li>
+                          <li><a href="categories.jsp">Ъпгрейд</a></li>
+                          <li><a href="categories.jsp">Периферия</a></li>
+                          <li><a href="categories.jsp">Wireless and Networking</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                  <div class="footer-newsletter">
+                      <h2 class="footer-wid-title">Вестник</h2>
+                      <p>Абонирайте се за нашият вестник и получавайте винаги най-новите и актуални оферти от нас!</p>
+                      <div class="newsletter-form">
+                          <form action="#">
+                              <input type="email" placeholder="Въведете вашият имейл">
+                              <input type="submit" value="Абонирай се">
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> <!-- End footer top area -->
     
     <div class="footer-bottom-area">
         <div class="container">
@@ -415,6 +358,10 @@
     <!-- Slider -->
     <script type="text/javascript" src="js/bxslider.min.js"></script>
     <script type="text/javascript" src="js/script.slider.js"></script>
+
+    <%-- Other--%>
+    <script type="text/javascript" src="/js/logout.js"></script>
+
   <script>
       function loadData() {
           var request = new XMLHttpRequest();
@@ -432,6 +379,8 @@
                   if (request.status === 200) {
                       productData = JSON.parse(this.responseText);
 
+                      document.getElementById("nav-categoryName").innerHTML = productData.category.category_name;
+                      document.getElementById("nav-ProductName").innerHTML = productData.product_brand + " " + productData.product_model;
                       document.getElementById("product-name").innerHTML = productData.product_brand + " " + productData.product_model;
                       document.getElementById("product-price").innerHTML = productData.product_price + "лв";
                       document.getElementById("product-category").innerHTML = productData.category.category_name;

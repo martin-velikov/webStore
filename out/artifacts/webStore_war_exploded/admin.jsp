@@ -1,6 +1,7 @@
 <%@ page import="test.ManageStudent" %>
 <%@ page import="dao.CategoryDao" %>
 <%@ page import="model.Category" %>
+<%@ page import="model.User" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,30 +29,36 @@
     <link rel="stylesheet" href="css/responsive.css">
 
   </head>
-  <body>
-   
-    <div class="header-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="user-menu">
-                        <ul>
-                            <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
-                            <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="header-right">
-                        <ul class="list-unstyled list-inline">
-                                <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End header area -->
+  <body onload="getCartData()">
+
+  <div class="header-area">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="user-menu">
+                      <ul>
+                          <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
+                          <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="header-right">
+                      <ul class="list-unstyled list-inline">
+                          <%  User user = (User) session.getAttribute("User");
+                              if(user != null){
+                                  out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравей, " + user.getFirst_name()+"</a></li>" +
+                                          "<li><a onclick=\"logout();\" style=\"cursor: pointer;\">Изход от акаунт</a></li>");
+                              } else {
+                                  out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
+                              } %>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> <!-- End header area -->
     
     <div class="site-branding-area">
         <div class="container">
@@ -278,5 +285,8 @@
     $("#addForm").toggle();
 });
     </script>
+
+    <%-- Other--%>
+    <script type="text/javascript" src="/js/mainFunctionality.js"></script>
   </body>
 </html>

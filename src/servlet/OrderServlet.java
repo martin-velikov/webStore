@@ -87,7 +87,7 @@ public class OrderServlet extends HttpServlet {
             }
             response.setStatus(200);
             PrintWriter writer = response.getWriter();
-            writer.write("Поръчката е приета!");
+            writer.write("<h1><center>Поръчката е приета!</center></h1>");
             writer.close();
             rd.forward(request, response);
 

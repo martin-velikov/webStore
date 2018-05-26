@@ -1,6 +1,7 @@
 <%@ page import="dao.ProductDao" %>
 <%@ page import="model.products.Product" %>
 <%@ page import="java.util.*" %>
+<%@ page import="model.User" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,10 +64,20 @@
             });
         }
     </script>
+    <script>
+        function singleProduct(productId) {
+            var request = new XMLHttpRequest();
+            request.open("post", "/SingleProductServlet", true);
+            request.send(JSON.stringify({productId: productId}));
+            location.href = 'single-product.jsp';
+        }
+    </script>
 
+    <%-- Other--%>
+    <script type="text/javascript" src="/js/mainFunctionality.js"></script>
 
 </head>
-<body>
+<body onload="getCartData()">
 
 <div class="header-area">
     <div class="container">
@@ -74,7 +85,10 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
+                        <%User user = (User) session.getAttribute("User"); %>
+                        <% if (user != null) {
+                            out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i> Моят акаунт</a></li>");
+                        }%>
                         <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
                     </ul>
                 </div>
@@ -83,7 +97,14 @@
             <div class="col-md-4">
                 <div class="header-right">
                     <ul class="list-unstyled list-inline">
-                        <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
+                        <%
+                            if(user != null){
+                                out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравей, " + user.getFirst_name()+"</a></li>" +
+                                        "<li><a onclick=\"logout();\" style=\"cursor: pointer;\">Изход от акаунт</a></li>");
+                            } else {
+                                out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
+                            }
+                        %>
                     </ul>
                 </div>
             </div>
@@ -102,8 +123,7 @@
 
             <div class="col-sm-6">
                 <div class="shopping-item">
-                    <a href="cart.jsp">Количка - <span class="cart-amunt">$100</span> <i
-                            class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                    <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
                 </div>
             </div>
         </div>
@@ -118,7 +138,7 @@
                     <li><a href="index.jsp">Начало</a></li>
                     <li><a href="shop.jsp">Магазин</a></li>
                     <li class="active"><a href="cart.jsp">Количка</a></li>
-                    <li><a href="#">Категории</a></li>
+                    <li><a href="categories.jsp">Категории</a></li>
                     <li><a href="contacts.jsp">Контакти</a></li>
                 </ul>
             </div>
@@ -155,41 +175,20 @@
 
                 <div class="single-sidebar">
                     <h2 class="sidebar-title">Продукти</h2>
-                    <div class="thubmnail-recent">
-                        <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                        <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
-                        <div class="product-sidebar-price">
-                            <ins>$700.00</ins>
-                            <del>$800.00</del>
-                        </div>
-                    </div>
-                    <div class="thubmnail-recent">
-                        <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                        <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
-                        <div class="product-sidebar-price">
-                            <ins>$700.00</ins>
-                            <del>$800.00</del>
-                        </div>
-                    </div>
-                    <div class="thubmnail-recent">
-                        <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                        <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
-                        <div class="product-sidebar-price">
-                            <ins>$700.00</ins>
-                            <del>$800.00</del>
-                        </div>
-                    </div>
-                    <div class="thubmnail-recent">
-                        <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                        <h2><a href="single-product.jsp">Sony Smart TV - 2015</a></h2>
-                        <div class="product-sidebar-price">
-                            <ins>$700.00</ins>
-                            <del>$800.00</del>
-                        </div>
-                    </div>
+                    <%
+                        ProductDao productDao = ProductDao.getInstance();
+                        List<Product> randomProducts = productDao.getRandomProducts(4);
+                        for(Product product : randomProducts) {
+                            out.println("<div class=\"thubmnail-recent\">" +
+                                    "<img src=\"" + product.getProduct_image() + "\" class=\"recent-thumb\">" +
+                                    "<h2><a onclick=\"singleProduct("+product.getId()+");\">" + product.getProduct_brand() + "" + " " + product.getProduct_model() + "</a></h2>" +
+                                    "<div class=\"product-sidebar-price\">" +
+                                    "<ins>" + product.getProduct_price() + "" + " лв.</ins>" +
+                                    "</div>" +
+                                    "</div>");
+                        }
+                            %>
                 </div>
-
-
             </div>
 
             <div class="col-md-8">
@@ -224,7 +223,6 @@
                             <tbody>
                             <%
                                 Map<Long, Integer> idsToQuantitiesMap = new HashMap<>();
-                                ProductDao productDao = ProductDao.getInstance();
                                 if (request == null || request.getCookies() == null) {
                                     return;
                                 }
@@ -251,7 +249,7 @@
                                             "                                            </td>\n" +
                                             "\n" +
                                             "                                            <td class=\"product-name\">\n" +
-                                            "                                                <a href=\"single-product.jsp\">" + product.getProduct_brand() + "\" \"" + product.getProduct_model() + "</a>\n" +
+                                            "                                                <a href=\"single-product.jsp\">" + product.getProduct_brand() +" "+ product.getProduct_model() + "</a>\n" +
                                             "                                            </td>\n" +
                                             "\n" +
                                             "                                            <td class=\"product-price\">\n" +
@@ -278,11 +276,20 @@
                                 <td class="actions" colspan="6">
                                     <input type="submit" value="Обнови количката" name="update_cart"
                                            class="button" onclick="getValues('/ShoppingCartServlet')">
-                                    <button type="button" value="Поръчай" name="proceed"
-                                            class="checkout-button button"
+                                    <input type="submit" value="Поръчай" name="proceed"
+                                            class="button"
                                             onclick="order('/OrderServlet');">
-                                        Поръчай
-                                    </button>
+                                    <br>
+                                    <center>
+                                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                        <input type="hidden" name="cmd" value="_s-xclick">
+                                        <input type="hidden" name="hosted_button_id" value="HCDKTMP2665X8">
+                                        <input type="hidden" name="on0" value="&#1050;&#1091;&#1087;&#1080; &#1095;&#1088;е&#1079; PayPal"><br><h3>&#1050;&#1091;&#1087;&#1080; &#1095;&#1088;е&#1079; PayPal</h3>
+                                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                                    </form>
+                                    </center>
+
                                 </td>
                             </tr>
                             </tbody>
@@ -295,44 +302,23 @@
                             <div class="cross-sells">
                                 <h2>Може би се интересувате от...</h2>
                                 <ul class="products">
-                                    <li class="product">
-                                        <a href="single-product.jsp">
-                                            <img width="325" height="325" alt="T_4_front"
-                                                 class="attachment-shop_catalog wp-post-image" src="/img/product-2.jpg">
-                                            <h3>Ship Your Idea</h3>
-                                            <span class="price"><span class="amount">£20.00</span></span>
-                                        </a>
-
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                           data-product_id="22" rel="nofollow" href="single-product.jsp">Вижте
-                                            повече</a>
-                                    </li>
-
-                                    <li class="product">
-                                        <a href="single-product.jsp">
-                                            <img width="325" height="325" alt="T_4_front"
-                                                 class="attachment-shop_catalog wp-post-image" src="/img/product-4.jpg">
-                                            <h3>Ship Your Idea</h3>
-                                            <span class="price"><span class="amount">£20.00</span></span>
-                                        </a>
-
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                           data-product_id="22" rel="nofollow" href="single-product.jsp">Вижте
-                                            повече</a>
-                                    </li>
-
-                                    <li class="product">
-                                        <a href="single-product.jsp">
-                                            <img width="325" height="325" alt="T_4_front"
-                                                 class="attachment-shop_catalog wp-post-image" src="/img/product-2.jpg">
-                                            <h3>Ship Your Idea</h3>
-                                            <span class="price"><span class="amount">£20.00</span></span>
-                                        </a>
-
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                           data-product_id="22" rel="nofollow" href="single-product.jsp">Вижте
-                                            повече</a>
-                                    </li>
+                                    <%
+                                     randomProducts = productDao.getRandomProducts(3);
+                                        for(Product product : randomProducts) {
+                                            out.println(
+                                                    "<li class=\"product\">" +
+                                                            "<a onclick=\"singleProduct("+product.getId()+");\">" +
+                                                            "<img width=\"325\" height=\"325\" class=\"attachment-shop_catalog wp-post-image\" src=\""+product.getProduct_image()+"\">" +
+                                                            "<h3>"+product.getProduct_brand() +" "+ product.getProduct_model()+"</h3>" +
+                                                            "<span class=\"price\"><span class=\"amount\">"+product.getProduct_price()+" лв</span></span>" +
+                                                            "</a>" +
+                                                            "                                        <a class=\"add_to_cart_button\" data-quantity=\"1\" data-product_sku=\"\"\n" +
+                                                            "                                           data-product_id=\"22\" rel=\"nofollow\" href=\"single-product.jsp\">Вижте\n" +
+                                                            "                                            повече</a>\n" +
+                                                            "                                    </li>"
+                                            );
+                                        }
+                                    %>
                                 </ul>
                             </div>
                         </div>
@@ -350,10 +336,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="footer-about-us">
                     <h2>тех<span>Свят</span></h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam
-                        laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure
-                        eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis
-                        magni at?</p>
+                    <p>ТехСвят разполага с огромно разнообразие от продукти, както за обикновения потребител, така и за хардуерни ентусиасти! Заповядайте и разгледайте богатият ни асортимент от компютърни и мрежови компоненти, аксесоари и много други! Ниските цени са предимство да изберете нас!</p>
                     <div class="footer-social">
                         <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
                         <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
@@ -367,11 +350,11 @@
                 <div class="footer-menu">
                     <h2 class="footer-wid-title">Навигация </h2>
                     <ul>
-                        <li><a href="#">Моят акаунт</a></li>
-                        <li><a href="#">Моята количка</a></li>
-                        <li><a href="#">История на поръчките</a></li>
-                        <li><a href="#">Магазин</a></li>
-                        <li><a href="#">Контакти</a></li>
+                        <li><a href="user.jsp">Моят акаунт</a></li>
+                        <li><a href="cart.jsp">Моята количка</a></li>
+                        <li><a href="shop.jsp">Магазин</a></li>
+                        <li><a href="categories.jsp">Категории</a></li>
+                        <li><a href="contacts.jsp">Контакти</a></li>
                     </ul>
                 </div>
             </div>
@@ -380,11 +363,11 @@
                 <div class="footer-menu">
                     <h2 class="footer-wid-title">Категории</h2>
                     <ul>
-                        <li><a href="#">Настолни компютри</a></li>
-                        <li><a href="#">Лаптопи</a></li>
-                        <li><a href="#">Ъпгрейд</a></li>
-                        <li><a href="#">Периферия</a></li>
-                        <li><a href="#">Wireless and Networking</a></li>
+                        <li><a href="categories.jsp">Настолни компютри</a></li>
+                        <li><a href="categories.jsp">Лаптопи</a></li>
+                        <li><a href="categories.jsp">Ъпгрейд</a></li>
+                        <li><a href="categories.jsp">Периферия</a></li>
+                        <li><a href="categories.jsp">Wireless and Networking</a></li>
                     </ul>
                 </div>
             </div>
@@ -410,8 +393,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="copyright">
-                    <p>&copy; 2017 martDesign. Всички права запазени. <a href="#"
-                                                                         target="_blank">dizainatNaMartin.com</a></p>
+                    <p>&copy; 2017 martDesign. Всички права запазени. <a href="#" target="_blank">dizainatNaMartin.com</a></p>
                 </div>
             </div>
         </div>
@@ -513,5 +495,7 @@
 
     }
 </script>
+
+
 </body>
 </html>

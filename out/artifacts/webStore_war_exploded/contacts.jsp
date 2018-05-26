@@ -2,6 +2,8 @@
 <%@ page import="dao.ProductDao" %>
 <%@ page import="model.products.Product" %>
 <%@ page import="model.User" %>
+<%@ page import="org.hibernate.Session" %>
+<%@ page import="dao.UserDao" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +29,8 @@
     <link rel="stylesheet" href="/css/owl.carousel.css">
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <%-- Other--%>
+    <script type="text/javascript" src="/js/mainFunctionality.js"></script>
 
 </head>
 <body>
@@ -90,8 +94,8 @@
                     <li><a href="index.jsp">Начало</a></li>
                     <li><a href="shop.jsp">Магазин</a></li>
                     <li><a href="cart.jsp">Количка</a></li>
-                    <li class="active"><a href="categories.jsp">Категории</a></li>
-                    <li><a href="contacts.jsp">Контакти</a></li>
+                    <li><a href="categories.jsp">Категории</a></li>
+                    <li class="active"><a href="contacts.jsp">Контакти</a></li>
                 </ul>
             </div>
         </div>
@@ -103,7 +107,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
-                    <h2>Магазин</h2>
+                    <h2>Контакти</h2>
                 </div>
             </div>
         </div>
@@ -115,37 +119,79 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
-            <div class="category-list" id="category-list">
-                <ul>
-                    <li>
-                        <img src="img\accessory.jpg" onclick="loadData('Accessory');">
-                    </li>
+            <img src="img/location.jpg" alt="" style="margin-bottom: 95px;">
+            <div class="col-md-6">
+                <div class="form-contact" style="float: right;">
+                <div class="form__head">
+                    <h3>Задайте ни въпрос</h3>
 
-                    <li>
-                        <img src="img\components.jpg" onclick="loadData('Components');">
-                    </li>
+                    <hr>
+                </div><!-- /.form-header -->
 
-                    <li>
-                        <img src="img\laptop.jpg" onclick="loadData('Laptop');">
-                    </li>
+                <div class="form__body">
+                    <input type="text" placeholder="Вашето име">
 
-                    <li>
-                        <img src="img\pc.jpg" onclick="loadData('Personal_Computer');">
-                    </li>
+                    <input type="Email" placeholder="Вашият email адрес">
 
-                    <li>
-                        <img src="img\monitor.jpg" onclick="loadData('Monitor');">
-                    </li>
+                    <input type="text" placeholder="Тема">
 
-                    <li>
-                        <img src="img\networking.jpg" onclick="loadData('Networking');">
-                    </li>
+                    <textarea type="textarea" placeholder="Задайте въпросът си тук ..."></textarea>
+                </div><!-- /.form__body -->
 
-                    <li>
-                        <img src="img\peripherals.jpg" onclick="loadData('Peripherals');">
-                    </li>
-                </ul>
-            </div><!-- /.category-list -->
+                <div class="form__actions">
+                    <input type="Submit" class="button" value="Изпрати">
+                </div><!-- /.form__actions -->
+            </div><!-- /.form-contact main-/-left-->
+
+            
+            </div>
+            <div class="col-md-6">
+                <div class="contacts-large">
+                <div class="contacts__head">
+                    <h3>Свържете се с нас</h3>
+
+                    <hr>
+                </div><!-- /.contacts__head -->
+
+                <div class="contacts__body">
+                    <p>Ако имате проблем или въпрос, който искате да ни зададете, не се страхувайте да ни попитате, като ни изпратите мейл, или ни се обадите на посочените телефони!</p>
+                </div><!-- /.contacts__body -->
+
+                <div class="contacts__head">
+                    <h3>Информация за контакти</h3>
+
+                    <hr>
+                </div><!-- /.contacts__head -->
+
+                <div class="contacts__body">
+                    <ul>
+                        <li>
+                            <i class="fa fa-home" aria-hidden="true"></i>
+
+                            <span>гр.Варна ул.Генерал Колев 52</span>
+                        </li>
+                        
+                        <li>
+                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+
+                            <span>Email: techworldbulgaria@gmail.com</span>
+                        </li>
+                        
+                        <li>
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+
+                            <span>www.techworldbulgaria.com</span>
+                        </li>
+                        
+                        <li>
+                            <i class="fa fa-headphones" aria-hidden="true"></i>
+
+                            <span>(+359) 896 888 888</span>
+                        </li>
+                    </ul>
+                </div><!-- /.contacts__body -->
+            </div><!-- /.contacts-large main-/-right -->
+            </div>
         </div>
     </div>
 </div>
@@ -237,68 +283,5 @@
 
 <!-- Initializer Script -->
 <script src="/js/main.js"></script>
-
-<script>
-    function loadData(categoryName) {
-        var request = new XMLHttpRequest();
-        var productData = {
-            id_product: 0,
-            product_brand: '',
-            product_model: '',
-            product_price: '',
-            product_description: '',
-            category: { id_category: '', category_name: ''}
-        };
-
-        request.open("get", '/CategoryListServlet?category=' + categoryName, true);
-        request.onreadystatechange = function () {
-            if (request.readyState == 4) {
-                if (request.status === 200) {
-                    productData = JSON.parse(this.responseText);
-                    document.getElementById("category-list").innerHTML = "";
-                    for(var i = 0; i < productData.length; i++) {
-                        var image = productData[i].product_image;
-                        var brand = productData[i].product_brand;
-                        var model = productData[i].product_model;
-                        var price = productData[i].product_price;
-                        var id = productData[i].id_product;
-
-                        document.getElementById("category-list").innerHTML += "<div class=\"col-md-3 col-sm-6\">" +
-                            "<div class=\"single-shop-product\">" +
-                            "<form action=\"ShoppingCartServlet\" method=\"POST\">" +
-                            "<div class=\"product-upper\">" +
-                            "<img src=\""+image+"\">" +
-                            "</div>" +
-                            "<h2><a href=\"#\">"+brand+" "+model+"</a></h2>" +
-                            "<div class=\"product-carousel-price\">" +
-                            "<ins>"+ price+"лв</ins>"+
-                            "</div>" +
-                            "<div class=\"product-option-shop\">" +
-                            "<input type=\"hidden\" value=\"\" + "+id+" name=\"id\">" +
-                            "<input type=\"hidden\" value=\"1\" name=\"quantity\">" +
-                            "<input type=\"hidden\" value=\"false\" name=\"shouldAlter\">" +
-                            "<input type=\"Submit\" class=\"add_to_cart_button\" value=\"Добави в количката\" >" +
-                            "</div>" +
-                            "</form>" +
-                            "</div>" +
-                            "</div>";
-                    }
-                    document.getElementById("category-list").innerHTML += "<div class=\"row\">" +
-                        "<div class=\"col-md-12\">" +
-                        "<div class=\"product-pagination text-center\"><input type='Submit' class='add_to_cart_button' value='Върни ме' onclick='location.reload()'>" +
-                        "</div>" +
-                            "</div>" +
-                            "</div>"
-
-                } else {
-                    alert("Грешка!");
-                }
-            }
-        };
-        request.send();
-    }
-</script>
-<%-- Other--%>
-<script type="text/javascript" src="/js/mainFunctionality.js"></script>
 </body>
 </html>

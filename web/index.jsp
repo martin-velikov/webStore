@@ -29,35 +29,44 @@
     <link rel="stylesheet" href="/css/responsive.css">
 
   </head>
-  <body onload="getCartData()">
-   
-    <div class="header-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="user-menu">
-                        <ul>
-                            <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
-                            <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
-                        </ul>
-                    </div>
-                </div>
+  <body>
 
-                <div class="col-md-4">
-                    <div class="header-right">
-                        <ul class="list-unstyled list-inline">
-                                <%  User user = (User) session.getAttribute("User");
-                                    if(user != null){
-                                    out.println("Здравей, " + user.getFirst_name());
-                                } else {
-                                    out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
-                                    } %>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End header area -->
+  <div class="header-area">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="user-menu">
+                      <ul>
+                          <%User user = (User) session.getAttribute("User"); %>
+                          <% if (user != null) {
+                              out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i> Моят акаунт</a></li>");
+                              if (user.getEmail().equals("admin@admin.ad")) {
+                                  out.println("<li><a href=\"admin.jsp\"><i class=\"fa fa-user\"></i> Администраторски панел</a></li>");
+                              }
+                          }
+                          %>
+                          <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="header-right">
+                      <ul class="list-unstyled list-inline">
+                          <%
+                              if(user != null){
+                                  out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравей, " + user.getFirst_name()+"</a></li>" +
+                                          "<li><a onclick=\"logout();\" style=\"cursor: pointer;\">Изход от акаунт</a></li>");
+                              } else {
+                                  out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
+                              }
+                          %>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> <!-- End header area -->
     
     <div class="site-branding-area">
         <div class="container">
@@ -177,10 +186,6 @@
                 <div class="col-md-12">
                     <div class="latest-product">
                         <h2 class="section-title">Последни продукти</h2>
-                        <%--<form action="/SingleProductServlet" method="post">--%>
-                            <%--<input type="hidden" name= "productId" value="4">--%>
-                            <%--<input type="submit" >kurec</input>--%>
-                        <%--</form>--%>
 
                         <div class="product-carousel">
                             <%
@@ -244,7 +249,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-about-us">
                         <h2>тех<span>Свят</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                        <p>ТехСвят разполага с огромно разнообразие от продукти, както за обикновения потребител, така и за хардуерни ентусиасти! Заповядайте и разгледайте богатият ни асортимент от компютърни и мрежови компоненти, аксесоари и много други! Ниските цени са предимство да изберете нас!</p>
                         <div class="footer-social">
                             <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
@@ -258,11 +263,11 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Навигация </h2>
                         <ul>
-                            <li><a href="#">Моят акаунт</a></li>
-                            <li><a href="#">Моята количка</a></li>
-                            <li><a href="#">История на поръчките</a></li>
-                            <li><a href="#">Магазин</a></li>
-                            <li><a href="#">Контакти</a></li>
+                            <li><a href="user.jsp">Моят акаунт</a></li>
+                            <li><a href="cart.jsp">Моята количка</a></li>
+                            <li><a href="shop.jsp">Магазин</a></li>
+                            <li><a href="categories.jsp">Категории</a></li>
+                            <li><a href="contacts.jsp">Контакти</a></li>
                         </ul>                        
                     </div>
                 </div>
@@ -271,11 +276,11 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Категории</h2>
                         <ul>
-                            <li><a href="#">Настолни компютри</a></li>
-                            <li><a href="#">Лаптопи</a></li>
-                            <li><a href="#">Ъпгрейд</a></li>
-                            <li><a href="#">Периферия</a></li>
-                            <li><a href="#">Wireless and Networking</a></li>
+                            <li><a href="categories.jsp">Настолни компютри</a></li>
+                            <li><a href="categories.jsp">Лаптопи</a></li>
+                            <li><a href="categories.jsp">Ъпгрейд</a></li>
+                            <li><a href="categories.jsp">Периферия</a></li>
+                            <li><a href="categories.jsp">Wireless and Networking</a></li>
                         </ul>                        
                     </div>
                 </div>
@@ -327,29 +332,10 @@
     <!-- Slider -->
     <script type="text/javascript" src="/js/bxslider.min.js"></script>
 	<script type="text/javascript" src="/js/script.slider.js"></script>
-  
-  <%-- Cart --%>
-  <script>
-      function getCartData() {
-          var request = new XMLHttpRequest();
-          var cartData = { total: 0, quantity: 0};
-          document.cookie = "redirect=" + location.pathname;
-          request.open("get", "/ShoppingCartServlet", true);
-          request.onreadystatechange = function () {
-              if (request.readyState == 4) {
-                  if (request.status === 200) {
-                      cartData = JSON.parse(this.responseText);
-                      document.getElementById("cartTotal").innerHTML = cartData.total;
-                      document.getElementById("cartItems").innerHTML = cartData.quantity;
 
-                  } else {
-                      alert("omaza sa");
-                  }
-              }
-          };
-          request.send();
-      }
-  </script>
+    <%-- Other--%>
+    <script type="text/javascript" src="/js/mainFunctionality.js"></script>
+
   <script>
       function singleProduct(productId) {
           var request = new XMLHttpRequest();
@@ -358,13 +344,5 @@
           location.href = 'single-product.jsp';
       }
   </script>
-  <%--<script>--%>
-      <%--$(document).ready(function() {--%>
-          <%--$(".single-product").on("click", ".view-details-link", function(event) {--%>
-              <%--var id = $(".productId").val();--%>
-              <%--alert(id);--%>
-          <%--});--%>
-      <%--});--%>
-  <%--</script>--%>
   </body>
 </html>

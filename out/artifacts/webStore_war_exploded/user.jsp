@@ -2,6 +2,8 @@
 <%@ page import="dao.ProductDao" %>
 <%@ page import="model.products.Product" %>
 <%@ page import="model.User" %>
+<%@ page import="org.hibernate.Session" %>
+<%@ page import="dao.UserDao" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +29,8 @@
     <link rel="stylesheet" href="/css/owl.carousel.css">
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <%-- Other--%>
+    <script type="text/javascript" src="/js/mainFunctionality.js"></script>
 
 </head>
 <body>
@@ -37,7 +41,7 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <%User user = (User) session.getAttribute("User"); %>
+                        <% User user = (User) session.getAttribute("User"); %>
                         <% if (user != null) {
                             out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i> Моят акаунт</a></li>");
                         }%>
@@ -90,7 +94,7 @@
                     <li><a href="index.jsp">Начало</a></li>
                     <li><a href="shop.jsp">Магазин</a></li>
                     <li><a href="cart.jsp">Количка</a></li>
-                    <li class="active"><a href="categories.jsp">Категории</a></li>
+                    <li><a href="categories.jsp">Категории</a></li>
                     <li><a href="contacts.jsp">Контакти</a></li>
                 </ul>
             </div>
@@ -103,7 +107,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
-                    <h2>Магазин</h2>
+                    <h2>Моят Акаунт</h2>
                 </div>
             </div>
         </div>
@@ -115,37 +119,23 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
-            <div class="category-list" id="category-list">
-                <ul>
-                    <li>
-                        <img src="img\accessory.jpg" onclick="loadData('Accessory');">
-                    </li>
-
-                    <li>
-                        <img src="img\components.jpg" onclick="loadData('Components');">
-                    </li>
-
-                    <li>
-                        <img src="img\laptop.jpg" onclick="loadData('Laptop');">
-                    </li>
-
-                    <li>
-                        <img src="img\pc.jpg" onclick="loadData('Personal_Computer');">
-                    </li>
-
-                    <li>
-                        <img src="img\monitor.jpg" onclick="loadData('Monitor');">
-                    </li>
-
-                    <li>
-                        <img src="img\networking.jpg" onclick="loadData('Networking');">
-                    </li>
-
-                    <li>
-                        <img src="img\peripherals.jpg" onclick="loadData('Peripherals');">
-                    </li>
-                </ul>
-            </div><!-- /.category-list -->
+            <center>
+            <h2>Моите данни:</h2>
+            <h4>(можете да променяте данните си)</h4>
+            <form action="/UpdateUser" method="post" style="width: 600px;">
+            <label for="fName">Име:</label><br>
+            <input type="text" id="fName" name="fName" value="<% out.println(user.getFirst_name()); %>"><br>
+            <label for="lName">Фамилия:</label><br>
+            <input type="text" id="lName" name="lName" value="<% out.println(user.getLast_name()); %>"><br>
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" value="<% out.println(user.getEmail()); %>"><br>
+            <label for="address">Адрес:</label><br>
+            <input type="text" id="address" name="address" value="<% out.println(user.getAddress()); %>"><br>
+            <label for="phone">Телефон:</label><br>
+            <input type="text" id="phone" name="phone" value="<% out.println(user.getPhone()); %>"><br><br>
+            <input type="submit" value="Промени">
+            </form>
+            </center>
         </div>
     </div>
 </div>
@@ -158,7 +148,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="footer-about-us">
                     <h2>тех<span>Свят</span></h2>
-                    <p>ТехСвят разполага с огромно разнообразие от продукти, както за обикновения потребител, така и за хардуерни ентусиасти! Заповядайте и разгледайте богатият ни асортимент от компютърни и мрежови компоненти, аксесоари и много други! Ниските цени са предимство да изберете нас!</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
                     <div class="footer-social">
                         <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
                         <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
@@ -172,11 +162,11 @@
                 <div class="footer-menu">
                     <h2 class="footer-wid-title">Навигация </h2>
                     <ul>
-                        <li><a href="user.jsp">Моят акаунт</a></li>
-                        <li><a href="cart.jsp">Моята количка</a></li>
-                        <li><a href="shop.jsp">Магазин</a></li>
-                        <li><a href="categories.jsp">Категории</a></li>
-                        <li><a href="contacts.jsp">Контакти</a></li>
+                        <li><a href="#">Моят акаунт</a></li>
+                        <li><a href="#">Моята количка</a></li>
+                        <li><a href="#">История на поръчките</a></li>
+                        <li><a href="#">Магазин</a></li>
+                        <li><a href="#">Контакти</a></li>
                     </ul>
                 </div>
             </div>
@@ -185,11 +175,11 @@
                 <div class="footer-menu">
                     <h2 class="footer-wid-title">Категории</h2>
                     <ul>
-                        <li><a href="categories.jsp">Настолни компютри</a></li>
-                        <li><a href="categories.jsp">Лаптопи</a></li>
-                        <li><a href="categories.jsp">Ъпгрейд</a></li>
-                        <li><a href="categories.jsp">Периферия</a></li>
-                        <li><a href="categories.jsp">Wireless and Networking</a></li>
+                        <li><a href="#">Настолни компютри</a></li>
+                        <li><a href="#">Лаптопи</a></li>
+                        <li><a href="#">Ъпгрейд</a></li>
+                        <li><a href="#">Периферия</a></li>
+                        <li><a href="#">Wireless and Networking</a></li>
                     </ul>
                 </div>
             </div>
@@ -210,18 +200,6 @@
     </div>
 </div> <!-- End footer top area -->
 
-<div class="footer-bottom-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="copyright">
-                    <p>&copy; 2017 martDesign. Всички права запазени. <a href="#" target="_blank">dizainatNaMartin.com</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> <!-- End footer bottom area -->
-
 <!-- Latest jQuery form server -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -237,68 +215,5 @@
 
 <!-- Initializer Script -->
 <script src="/js/main.js"></script>
-
-<script>
-    function loadData(categoryName) {
-        var request = new XMLHttpRequest();
-        var productData = {
-            id_product: 0,
-            product_brand: '',
-            product_model: '',
-            product_price: '',
-            product_description: '',
-            category: { id_category: '', category_name: ''}
-        };
-
-        request.open("get", '/CategoryListServlet?category=' + categoryName, true);
-        request.onreadystatechange = function () {
-            if (request.readyState == 4) {
-                if (request.status === 200) {
-                    productData = JSON.parse(this.responseText);
-                    document.getElementById("category-list").innerHTML = "";
-                    for(var i = 0; i < productData.length; i++) {
-                        var image = productData[i].product_image;
-                        var brand = productData[i].product_brand;
-                        var model = productData[i].product_model;
-                        var price = productData[i].product_price;
-                        var id = productData[i].id_product;
-
-                        document.getElementById("category-list").innerHTML += "<div class=\"col-md-3 col-sm-6\">" +
-                            "<div class=\"single-shop-product\">" +
-                            "<form action=\"ShoppingCartServlet\" method=\"POST\">" +
-                            "<div class=\"product-upper\">" +
-                            "<img src=\""+image+"\">" +
-                            "</div>" +
-                            "<h2><a href=\"#\">"+brand+" "+model+"</a></h2>" +
-                            "<div class=\"product-carousel-price\">" +
-                            "<ins>"+ price+"лв</ins>"+
-                            "</div>" +
-                            "<div class=\"product-option-shop\">" +
-                            "<input type=\"hidden\" value=\"\" + "+id+" name=\"id\">" +
-                            "<input type=\"hidden\" value=\"1\" name=\"quantity\">" +
-                            "<input type=\"hidden\" value=\"false\" name=\"shouldAlter\">" +
-                            "<input type=\"Submit\" class=\"add_to_cart_button\" value=\"Добави в количката\" >" +
-                            "</div>" +
-                            "</form>" +
-                            "</div>" +
-                            "</div>";
-                    }
-                    document.getElementById("category-list").innerHTML += "<div class=\"row\">" +
-                        "<div class=\"col-md-12\">" +
-                        "<div class=\"product-pagination text-center\"><input type='Submit' class='add_to_cart_button' value='Върни ме' onclick='location.reload()'>" +
-                        "</div>" +
-                            "</div>" +
-                            "</div>"
-
-                } else {
-                    alert("Грешка!");
-                }
-            }
-        };
-        request.send();
-    }
-</script>
-<%-- Other--%>
-<script type="text/javascript" src="/js/mainFunctionality.js"></script>
 </body>
 </html>

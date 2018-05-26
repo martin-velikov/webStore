@@ -19,20 +19,28 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         UserDao userDao = UserDao.getInstance();
-        User user = userDao.getUser(email);
-        if (user!=null){
-            if (user.getPassword().equals(password)){
-                HttpSession session = request.getSession();
-                session.setAttribute("User", user);
-                RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-                rd.forward(request, response);
-                return;
-            }
-
+        try {
+            User user = userDao.getUser(email);
+            if (user!=null){
+                if (user.getPassword().equals(password)){
+                    HttpSession session = request.getSession();
+                    session.setAttribute("User", user);
+                    RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                    rd.forward(request, response);
+                    return;
+                }
+                else {
+                    RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+                    request.setAttribute("failMessage", "Грешен потребител или парола!");
+                    rd.forward(request,response);
+                }
         }
-        RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
-        request.setAttribute("failMessage", "Грешен потребител или парола!");
-        rd.forward(request,response);
+        }catch (Exception e) {
+                RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+                request.setAttribute("failMessage", "Грешен потребител или парола!");
+                rd.forward(request,response);
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

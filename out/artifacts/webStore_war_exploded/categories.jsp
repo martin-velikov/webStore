@@ -1,6 +1,7 @@
 
 <%@ page import="dao.ProductDao" %>
 <%@ page import="model.products.Product" %>
+<%@ page import="model.User" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,10 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
+                        <%User user = (User) session.getAttribute("User"); %>
+                        <% if (user != null) {
+                            out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i> Моят акаунт</a></li>");
+                        }%>
                         <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
                     </ul>
                 </div>
@@ -45,7 +49,14 @@
             <div class="col-md-4">
                 <div class="header-right">
                     <ul class="list-unstyled list-inline">
-                        <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
+                        <%
+                            if(user != null){
+                                out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравей, " + user.getFirst_name()+"</a></li>" +
+                                        "<li><a onclick=\"logout();\" style=\"cursor: pointer;\">Изход от акаунт</a></li>");
+                            } else {
+                                out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
+                            }
+                        %>
                     </ul>
                 </div>
             </div>
@@ -64,7 +75,7 @@
 
             <div class="col-sm-6">
                 <div class="shopping-item">
-                    <a href="cart.jsp">Количка - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                    <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
                 </div>
             </div>
         </div>
@@ -77,9 +88,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="index.jsp">Начало</a></li>
-                    <li class="active"><a href="shop.jsp">Магазин</a></li>
+                    <li><a href="shop.jsp">Магазин</a></li>
                     <li><a href="cart.jsp">Количка</a></li>
-                    <li><a href="#">Категории</a></li>
+                    <li class="active"><a href="categories.jsp">Категории</a></li>
                     <li><a href="contacts.jsp">Контакти</a></li>
                 </ul>
             </div>
@@ -147,7 +158,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="footer-about-us">
                     <h2>тех<span>Свят</span></h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                    <p>ТехСвят разполага с огромно разнообразие от продукти, както за обикновения потребител, така и за хардуерни ентусиасти! Заповядайте и разгледайте богатият ни асортимент от компютърни и мрежови компоненти, аксесоари и много други! Ниските цени са предимство да изберете нас!</p>
                     <div class="footer-social">
                         <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
                         <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
@@ -161,11 +172,11 @@
                 <div class="footer-menu">
                     <h2 class="footer-wid-title">Навигация </h2>
                     <ul>
-                        <li><a href="#">Моят акаунт</a></li>
-                        <li><a href="#">Моята количка</a></li>
-                        <li><a href="#">История на поръчките</a></li>
-                        <li><a href="#">Магазин</a></li>
-                        <li><a href="#">Контакти</a></li>
+                        <li><a href="user.jsp">Моят акаунт</a></li>
+                        <li><a href="cart.jsp">Моята количка</a></li>
+                        <li><a href="shop.jsp">Магазин</a></li>
+                        <li><a href="categories.jsp">Категории</a></li>
+                        <li><a href="contacts.jsp">Контакти</a></li>
                     </ul>
                 </div>
             </div>
@@ -174,11 +185,11 @@
                 <div class="footer-menu">
                     <h2 class="footer-wid-title">Категории</h2>
                     <ul>
-                        <li><a href="#">Настолни компютри</a></li>
-                        <li><a href="#">Лаптопи</a></li>
-                        <li><a href="#">Ъпгрейд</a></li>
-                        <li><a href="#">Периферия</a></li>
-                        <li><a href="#">Wireless and Networking</a></li>
+                        <li><a href="categories.jsp">Настолни компютри</a></li>
+                        <li><a href="categories.jsp">Лаптопи</a></li>
+                        <li><a href="categories.jsp">Ъпгрейд</a></li>
+                        <li><a href="categories.jsp">Периферия</a></li>
+                        <li><a href="categories.jsp">Wireless and Networking</a></li>
                     </ul>
                 </div>
             </div>
@@ -198,6 +209,18 @@
         </div>
     </div>
 </div> <!-- End footer top area -->
+
+<div class="footer-bottom-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="copyright">
+                    <p>&copy; 2017 martDesign. Всички права запазени. <a href="#" target="_blank">dizainatNaMartin.com</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End footer bottom area -->
 
 <!-- Latest jQuery form server -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
@@ -268,12 +291,14 @@
                             "</div>"
 
                 } else {
-                    alert("omaza sa");
+                    alert("Грешка!");
                 }
             }
         };
         request.send();
     }
 </script>
+<%-- Other--%>
+<script type="text/javascript" src="/js/mainFunctionality.js"></script>
 </body>
 </html>

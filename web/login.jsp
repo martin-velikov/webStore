@@ -1,3 +1,4 @@
+<%@ page import="model.User" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,29 +27,39 @@
 
   </head>
   <body>
-   
-    <div class="header-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="user-menu">
-                        <ul>
-                            <li><a href="user.jsp"><i class="fa fa-user"></i> Моят акаунт</a></li>
-                            <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="header-right">
-                        <ul class="list-unstyled list-inline">
-                                <li><a href="login.jsp"><i class="fa fa-user"></i> Влез в акаунт</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End header area -->
+
+  <div class="header-area">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="user-menu">
+                      <ul>
+                          <%User user = (User) session.getAttribute("User"); %>
+                          <% if (user != null) {
+                              out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i> Моят акаунт</a></li>");
+                          }%>
+                          <li><a href="cart.jsp"><i class="fa fa-user"></i> Моята количка</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="header-right">
+                      <ul class="list-unstyled list-inline">
+                          <%
+                              if(user != null){
+                                  out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравей, " + user.getFirst_name()+"</a></li>" +
+                                          "<li><a onclick=\"logout();\" style=\"cursor: pointer;\">Изход от акаунт</a></li>");
+                              } else {
+                                  out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
+                              }
+                          %>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> <!-- End header area -->
     
     <div class="site-branding-area">
         <div class="container">
@@ -61,7 +72,7 @@
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.jsp">Количка - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i></a>
+                        <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
                     </div>
                 </div>
             </div>
@@ -101,6 +112,11 @@
         
         <div class="container">
             <div class="form-container form-container--small">
+                <%
+                    if (null != request.getAttribute("failMessage")) {
+                        out.println(request.getAttribute("failMessage"));
+                    }
+                %>
                 <form action="/LoginServlet" method="post" class="login-form">
                     <label for="email">Email:</label><br>
                     <input type="text" id="email" class="form-control" placeholder="Моля, въведете вашият Email" name="email"><br>
@@ -114,64 +130,76 @@
         </div>
     </div>
 
-    <div class="footer-top-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-about-us">
-                        <h2>тех<span>Свят</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
-                        <div class="footer-social">
-                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Навигация </h2>
-                        <ul>
-                            <li><a href="#">Моят акаунт</a></li>
-                            <li><a href="#">Моята количка</a></li>
-                            <li><a href="#">История на поръчките</a></li>
-                            <li><a href="#">Магазин</a></li>
-                            <li><a href="#">Контакти</a></li>
-                        </ul>                        
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Категории</h2>
-                        <ul>
-                            <li><a href="#">Настолни компютри</a></li>
-                            <li><a href="#">Лаптопи</a></li>
-                            <li><a href="#">Ъпгрейд</a></li>
-                            <li><a href="#">Периферия</a></li>
-                            <li><a href="#">Wireless and Networking</a></li>
-                        </ul>                        
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-newsletter">
-                        <h2 class="footer-wid-title">Вестник</h2>
-                        <p>Абонирайте се за нашият вестник и получавайте винаги най-новите и актуални оферти от нас!</p>
-                        <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" placeholder="Въведете вашият имейл">
-                                <input type="submit" value="Абонирай се">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End footer top area -->
+  <div class="footer-top-area">
+      <div class="zigzag-bottom"></div>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-3 col-sm-6">
+                  <div class="footer-about-us">
+                      <h2>тех<span>Свят</span></h2>
+                      <p>ТехСвят разполага с огромно разнообразие от продукти, както за обикновения потребител, така и за хардуерни ентусиасти! Заповядайте и разгледайте богатият ни асортимент от компютърни и мрежови компоненти, аксесоари и много други! Ниските цени са предимство да изберете нас!</p>
+                      <div class="footer-social">
+                          <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                          <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                          <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                          <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                  <div class="footer-menu">
+                      <h2 class="footer-wid-title">Навигация </h2>
+                      <ul>
+                          <li><a href="user.jsp">Моят акаунт</a></li>
+                          <li><a href="cart.jsp">Моята количка</a></li>
+                          <li><a href="shop.jsp">Магазин</a></li>
+                          <li><a href="categories.jsp">Категории</a></li>
+                          <li><a href="contacts.jsp">Контакти</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                  <div class="footer-menu">
+                      <h2 class="footer-wid-title">Категории</h2>
+                      <ul>
+                          <li><a href="categories.jsp">Настолни компютри</a></li>
+                          <li><a href="categories.jsp">Лаптопи</a></li>
+                          <li><a href="categories.jsp">Ъпгрейд</a></li>
+                          <li><a href="categories.jsp">Периферия</a></li>
+                          <li><a href="categories.jsp">Wireless and Networking</a></li>
+                      </ul>
+                  </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6">
+                  <div class="footer-newsletter">
+                      <h2 class="footer-wid-title">Вестник</h2>
+                      <p>Абонирайте се за нашият вестник и получавайте винаги най-новите и актуални оферти от нас!</p>
+                      <div class="newsletter-form">
+                          <form action="#">
+                              <input type="email" placeholder="Въведете вашият имейл">
+                              <input type="submit" value="Абонирай се">
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> <!-- End footer top area -->
+
+  <div class="footer-bottom-area">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="copyright">
+                      <p>&copy; 2017 martDesign. Всички права запазени. <a href="#" target="_blank">dizainatNaMartin.com</a></p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> <!-- End footer bottom area -->
     
     <div class="footer-bottom-area">
         <div class="container">
@@ -204,5 +232,7 @@
     <!-- Slider -->
     <script type="text/javascript" src="/js/bxslider.min.js"></script>
     <script type="text/javascript" src="/js/script.slider.js"></script>
+    <%-- Other--%>
+  <script type="text/javascript" src="/js/mainFunctionality.js"></script>
   </body>
 </html>
