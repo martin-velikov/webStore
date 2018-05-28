@@ -1,4 +1,3 @@
-<%@ page import="test.ManageStudent" %>
 <%@ page import="dao.CategoryDao" %>
 <%@ page import="model.Category" %>
 <%@ page import="model.User" %>

@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/css/responsive.css">
 
   </head>
-  <body>
+  <body onload="getCartData();">
 
   <div class="header-area">
       <div class="container">
@@ -71,13 +71,22 @@
     <div class="site-branding-area">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <div class="logo">
                         <h1><a href="index.jsp"><img src="/img/logo.png"></a></h1>
                     </div>
                 </div>
-                
-                <div class="col-sm-6">
+
+                <div class="col-sm-4">
+                <div class="single-sidebar" style="margin-top: 40px;">
+                    <form action="/SearchServlet" method="post">
+                        <input type="text" id="searchBar" name="searchProducts" placeholder="Какво търсите днес?" style="float: left; width: 70%;">
+                        <input type="submit" value="Намери" style="float: left; width: 30%;">
+                    </form>
+                </div>
+                </div>
+
+                <div class="col-sm-4">
                     <div class="shopping-item">
                         <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
                     </div>
@@ -196,7 +205,7 @@
                                             "<form action=\"/SingleProductServlet\" method=\"post\" id=\"singleProductForm\">"+
                                             "<div class=\"single-product\">\n" +
                                             "                                <div class=\"product-f-image\">\n" +
-                                            "                                    <img src=\"/img/product-1.jpg\" alt=\"\">\n" +
+                                            "                                    <img src=\""+product.getProduct_image()+"\" alt=\"\">\n" +
                                             "                                    <div class=\"product-hover\">\n" +
                                             "                                        <input type=\"hidden\" name=\"productId\" value=\""+product.getId()+"\">" +
                                             "                                        <a href=\"#\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Добави в количката</a>\n" +
@@ -243,7 +252,6 @@
     </div> <!-- End brands area -->
        
     <div class="footer-top-area">
-        <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
@@ -278,9 +286,9 @@
                         <ul>
                             <li><a href="categories.jsp">Настолни компютри</a></li>
                             <li><a href="categories.jsp">Лаптопи</a></li>
-                            <li><a href="categories.jsp">Ъпгрейд</a></li>
+                            <li><a href="categories.jsp">Компоненти</a></li>
                             <li><a href="categories.jsp">Периферия</a></li>
-                            <li><a href="categories.jsp">Wireless and Networking</a></li>
+                            <li><a href="categories.jsp">Мрежови компоненти</a></li>
                         </ul>                        
                     </div>
                 </div>

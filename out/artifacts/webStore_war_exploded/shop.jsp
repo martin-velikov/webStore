@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ТехСвят - моят технологичен свят</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../../Desktop/magazin/img/favicon.ico" />
+      <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
     
     <!-- Google Fonts -->
     <link href='/css/titilium_font.css' rel='stylesheet' type='text/css'>
@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="/css/responsive.css">
 
   </head>
-  <body>
+  <body onload="getCartData();">
 
   <div class="header-area">
       <div class="container">
@@ -62,24 +62,33 @@
           </div>
       </div>
   </div> <!-- End header area -->
-    
-    <div class="site-branding-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="logo">
-                        <h1><a href="index.jsp"><img src="/img/logo.png"></a></h1>
-                    </div>
-                </div>
-                
-                <div class="col-sm-6">
-                    <div class="shopping-item">
-                        <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End site branding area -->
+
+  <div class="site-branding-area">
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-4">
+                  <div class="logo">
+                      <h1><a href="index.jsp"><img src="/img/logo.png"></a></h1>
+                  </div>
+              </div>
+
+              <div class="col-sm-4">
+                  <div class="single-sidebar" style="margin-top: 40px;">
+                      <form action="/SearchServlet" method="post">
+                          <input type="text" id="searchBar" name="searchProducts" placeholder="Какво търсите днес?" style="float: left; width: 70%;">
+                          <input type="submit" value="Намери" style="float: left; width: 30%;">
+                      </form>
+                  </div>
+              </div>
+
+              <div class="col-sm-4">
+                  <div class="shopping-item">
+                      <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> <!-- End site branding area -->
     
     <div class="mainmenu-area">
         <div class="container">
@@ -120,9 +129,10 @@
                                 "                    <div class=\"single-shop-product\">\n" +
                                 "                       <form action=\"ShoppingCartServlet\" method=\"POST\">\n" +
                                 "                        <div class=\"product-upper\">\n" +
+                                "<a onclick=\"singleProduct("+product.getId()+");\" style=\"cursor: pointer;\">"+
                                 "                            <img src=\"" + product.getProduct_image() + "\" alt=\"\">\n" +
                                 "                        </div>\n" +
-                                "                        <h2><a href=\"\">" + product.getProduct_brand() + " " + product.getProduct_model() +"</a></h2>\n" +
+                                "                        <h2>" + product.getProduct_brand() + " " + product.getProduct_model() +"</a></h2>\n" +
                                 "                        <div class=\"product-carousel-price\">\n" +
                                 "                            <ins>" + String.format("%.2f" ,product.getProduct_price()) + "лв</ins>\n" +
                                 "                        </div>  \n" +
@@ -144,7 +154,6 @@
 
 
   <div class="footer-top-area">
-      <div class="zigzag-bottom"></div>
       <div class="container">
           <div class="row">
               <div class="col-md-3 col-sm-6">
@@ -232,5 +241,13 @@
 
     <%-- Other--%>
     <script type="text/javascript" src="/js/mainFunctionality.js"></script>
+  <script>
+      function singleProduct(productId) {
+          var request = new XMLHttpRequest();
+          request.open("post", "/SingleProductServlet", true);
+          request.send(JSON.stringify({productId: productId}));
+          location.href = 'single-product.jsp';
+      }
+  </script>
   </body>
 </html>

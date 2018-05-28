@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
-
+        request.setCharacterEncoding("UTF-8");
         String fNamePattern = "[A-Z\\u0400-\\u04FFa-z\\u0400-\\u04FF]{2,20}";
         String lNamePattern =  "[A-Z\\u0400-\\u04FFa-z\\u0400-\\u04FF]{2,20}";
         String phonePattern = "(359|0)8\\d{2}\\s?\\d{3}\\s?\\d{3}";
@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
             if (checkInfo(lName,lNamePattern)==true){
                 if (checkInfo(phone,phonePattern)==true){
                     if (checkInfo(email,emailPattern)==true){
-                        if (password.length() > 8) {
+                        if (password.length() >= 8) {
                             try {
                                 User user = userDao.getUser(email);
                                 request.setAttribute("failMessage", "Потребител с такъв email вече съществува!");
@@ -60,7 +60,10 @@ public class RegisterServlet extends HttpServlet {
                                         rd.forward(request, response);
                                     }
                                 }
-                            }
+                            } else {
+                            request.setAttribute("failMessage", "Паролата трябва да е минимум 8 символа!");
+                            rd.forward(request, response);
+                        }
                         }
                         else {
                             request.setAttribute("failMessage", "Моля, въведете данните си правилно!");

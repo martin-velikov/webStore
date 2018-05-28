@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ТехСвят - моят технологичен свят</title>
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+      <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
     
     <!-- Google Fonts -->
     <link href='css/titilium_font.css' rel='stylesheet' type='text/css'>
@@ -38,7 +38,7 @@
       </script>
 
   </head>
-  <body onload="loadData()">
+  <body onload="loadData(); getCartData();">
 
   <div class="header-area">
       <div class="container">
@@ -162,14 +162,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="product-images">
-                                    <div class="product-main-img">
+                                    <div class="product-main-img" id="product-image">
                                         <img src="img/product-2.jpg" alt="">
-                                    </div>
-                                    
-                                    <div class="product-gallery">
-                                        <img src="img/product-thumb-1.jpg" alt="">
-                                        <img src="img/product-thumb-2.jpg" alt="">
-                                        <img src="img/product-thumb-3.jpg" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +181,7 @@
                                         </div>
                                         <button class="add_to_cart_button" type="submit">Добави в количката</button>
                                     </form>   
-                                    
+                                    <p>Налични: <span id="quantity"></span> бр.</p>
                                     <div class="product-inner-category">
                                         <p>Категория: <a href="" id="product-category">Summer</a>. </p>
                                     </div> 
@@ -199,10 +193,8 @@
                                         </ul>
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                                <h2>Product Description</h2>  
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique, diam in consequat iaculis, est purus iaculis mauris, imperdiet facilisis ante ligula at nulla. Quisque volutpat nulla risus, id maximus ex aliquet ut. Suspendisse potenti. Nulla varius lectus id turpis dignissim porta. Quisque magna arcu, blandit quis felis vehicula, feugiat gravida diam. Nullam nec turpis ligula. Aliquam quis blandit elit, ac sodales nisl. Aliquam eget dolor eget elit malesuada aliquet. In varius lorem lorem, semper bibendum lectus lobortis ac.</p>
-
-                                                <p>Mauris placerat vitae lorem gravida viverra. Mauris in fringilla ex. Nulla facilisi. Etiam scelerisque tincidunt quam facilisis lobortis. In malesuada pulvinar neque a consectetur. Nunc aliquam gravida purus, non malesuada sem accumsan in. Morbi vel sodales libero.</p>
+                                                <h2>Описание на продукта:</h2>
+                                                <p id="product-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique, diam in consequat iaculis, est purus iaculis mauris, imperdiet facilisis ante ligula at nulla. Quisque volutpat nulla risus, id maximus ex aliquet ut. Suspendisse potenti. Nulla varius lectus id turpis dignissim porta. Quisque magna arcu, blandit quis felis vehicula, feugiat gravida diam. Nullam nec turpis ligula. Aliquam quis blandit elit, ac sodales nisl. Aliquam eget dolor eget elit malesuada aliquet. In varius lorem lorem, semper bibendum lectus lobortis ac.</p>
                                             </div>
                                             <div role="tabpanel" class="tab-pane fade" id="profile">
                                                 <h2>Отзиви</h2>
@@ -241,7 +233,7 @@
                                                 "<form action=\"/SingleProductServlet\" method=\"post\" id=\"singleProductForm\">"+
                                                         "<div class=\"single-product\">\n" +
                                                         "                                <div class=\"product-f-image\">\n" +
-                                                        "                                    <img src=\"/img/product-1.jpg\" alt=\"\">\n" +
+                                                        "                                    <img src=\""+product.getProduct_image()+"\" alt=\"\">\n" +
                                                         "                                    <div class=\"product-hover\">\n" +
                                                         "                                        <input type=\"hidden\" name=\"productId\" value=\""+product.getId()+"\">" +
                                                         "                                        <a href=\"#\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Добави в количката</a>\n" +
@@ -304,9 +296,9 @@
                       <ul>
                           <li><a href="categories.jsp">Настолни компютри</a></li>
                           <li><a href="categories.jsp">Лаптопи</a></li>
-                          <li><a href="categories.jsp">Ъпгрейд</a></li>
+                          <li><a href="categories.jsp">Компоненти</a></li>
                           <li><a href="categories.jsp">Периферия</a></li>
-                          <li><a href="categories.jsp">Wireless and Networking</a></li>
+                          <li><a href="categories.jsp">Мрежови компоненти</a></li>
                       </ul>
                   </div>
               </div>
@@ -370,7 +362,9 @@
               product_brand: '',
               product_model: '',
               product_price: '',
+              product_image: '',
               product_description: '',
+              product_quantity: '',
               category: { id_category: '', category_name: ''}
           };
           request.open("get", "/SingleProductServlet?id=", true);
@@ -384,6 +378,9 @@
                       document.getElementById("product-name").innerHTML = productData.product_brand + " " + productData.product_model;
                       document.getElementById("product-price").innerHTML = productData.product_price + "лв";
                       document.getElementById("product-category").innerHTML = productData.category.category_name;
+                      document.getElementById("product-description").innerHTML = productData.product_description;
+                      document.getElementById("product-image").innerHTML = '<img src="'+productData.product_image+'" alt="">';
+                      document.getElementById("quantity").innerHTML = productData.product_quantity;
 
                   } else {
                       alert("omaza sa");

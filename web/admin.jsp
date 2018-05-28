@@ -1,4 +1,3 @@
-<%@ page import="test.ManageStudent" %>
 <%@ page import="dao.CategoryDao" %>
 <%@ page import="model.Category" %>
 <%@ page import="model.User" %>
@@ -218,17 +217,17 @@
                         </ul>                        
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Категории</h2>
                         <ul>
-                            <li><a href="#">Настолни компютри</a></li>
-                            <li><a href="#">Лаптопи</a></li>
-                            <li><a href="#">Ъпгрейд</a></li>
-                            <li><a href="#">Периферия</a></li>
-                            <li><a href="#">Wireless and Networking</a></li>
-                        </ul>                        
+                            <li><a href="categories.jsp">Настолни компютри</a></li>
+                            <li><a href="categories.jsp">Лаптопи</a></li>
+                            <li><a href="categories.jsp">Компоненти</a></li>
+                            <li><a href="categories.jsp">Периферия</a></li>
+                            <li><a href="categories.jsp">Мрежови компоненти</a></li>
+                        </ul>
                     </div>
                 </div>
                 

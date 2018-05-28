@@ -2,6 +2,7 @@ package servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import dao.BaseDao;
 import dao.OrderDao;
 import dao.ProductDao;
 import dao.UserDao;
@@ -25,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-import static com.sun.deploy.net.protocol.ProtocolType.HTTP;
 
 @WebServlet("/OrderServlet")
 public class OrderServlet extends HttpServlet {
@@ -64,39 +63,51 @@ public class OrderServlet extends HttpServlet {
         ProductDao productDao = ProductDao.getInstance();
         for(OrderModel orderModel : list){
             Product product = productDao.getProductCopy(orderModel.id);
-            OrderItem orderItem = new OrderItem();
-            orderItem.setProduct(product);
-            orderItem.setPrice(product.getProduct_price());
-            orderItem.setQuantity(orderModel.quantity);
-            orderItemList.add(orderItem);
-        }
+            if (product.getProduct_quantity()>=orderModel.quantity) {
+                int oldQuantity = product.getProduct_quantity();
+                int newQuantity = product.getProduct_quantity()-orderModel.quantity;
+                OrderItem orderItem = new OrderItem();
+                orderItem.setProduct(product);
+                orderItem.setPrice(product.getProduct_price());
+                orderItem.setQuantity(orderModel.quantity);
+                orderItemList.add(orderItem);
+                productDao.updateProduct(newQuantity,product.getId_product());
 
-        order.setOrderItems(orderItemList);
-        order.setDate(new Date());
-        order.setUser((User) request.getSession().getAttribute("User"));
-        OrderDao orderDao = OrderDao.getInstance();
-        if(orderDao.insert(order) != null){
-            for (Cookie cookie : request.getCookies()){
-                if(cookie.getName().equals("JSESSIONID")){
-                    continue;
+                order.setOrderItems(orderItemList);
+                order.setDate(new Date());
+                order.setUser((User) request.getSession().getAttribute("User"));
+                order.setStatus("Приета поръчка");
+                OrderDao orderDao = OrderDao.getInstance();
+                if(orderDao.insert(order) != null){
+                    for (Cookie cookie : request.getCookies()){
+                        if(cookie.getName().equals("JSESSIONID")){
+                            continue;
+                        }
+                        Cookie cookie1 = new Cookie(cookie.getName(), "");
+                        cookie1.setMaxAge(0);
+                        cookie1.setPath("/");
+                        response.addCookie(cookie1);
+                    }
+                    response.setStatus(200);
+                    PrintWriter writer = response.getWriter();
+                    writer.write("<h1><center>Поръчката е приета!</center></h1>");
+                    writer.close();
+                    rd.forward(request, response);
+
+                }else{
+                    PrintWriter writer = response.getWriter();
+                    writer.write("Проблем с поръчката!");
+                    writer.close();
+                    rd.forward(request, response);
                 }
-                Cookie cookie1 = new Cookie(cookie.getName(), "");
-                cookie1.setMaxAge(0);
-                cookie1.setPath("/");
-                response.addCookie(cookie1);
             }
-            response.setStatus(200);
-            PrintWriter writer = response.getWriter();
-            writer.write("<h1><center>Поръчката е приета!</center></h1>");
-            writer.close();
-            rd.forward(request, response);
+            else if (product.getProduct_quantity()<orderModel.quantity){
+                response.setStatus(404);
+                rd.forward(request,response);
+            }
 
-        }else{
-            PrintWriter writer = response.getWriter();
-            writer.write("Проблем с поръчката!");
-            writer.close();
-            rd.forward(request, response);
         }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

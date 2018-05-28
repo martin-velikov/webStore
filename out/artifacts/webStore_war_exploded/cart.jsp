@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ТехСвят - моят технологичен свят</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
 
     <!-- Google Fonts -->
     <link href='/css/titilium_font.css' rel='stylesheet' type='text/css'>
@@ -115,13 +115,22 @@
 <div class="site-branding-area">
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="logo">
                     <h1><a href="index.jsp"><img src="/img/logo.png"></a></h1>
                 </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-4">
+                <div class="single-sidebar" style="margin-top: 40px;">
+                    <form action="/SearchServlet" method="post">
+                        <input type="text" id="searchBar" name="searchProducts" placeholder="Какво търсите днес?" style="float: left; width: 70%;">
+                        <input type="submit" value="Намери" style="float: left; width: 30%;">
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
                 <div class="shopping-item">
                     <a href="cart.jsp">Количка - <span class="cart-amunt" id="cartTotal">0</span>лв <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartItems">0</span></a>
                 </div>
@@ -194,23 +203,13 @@
             <div class="col-md-8">
                 <div class="product-content-right">
                     <div class="woocommerce">
-                        <center>
+                        <table cellspacing="0" class="shop_table cart" id="cartTable">
                             <%
-                                if (null != request.getAttribute("successMessage")) {
-                                    out.println(request.getAttribute("successMessage"));
-                                    System.out.println(request.getAttribute("successMessage"));
-                                    for (Cookie cookie : request.getCookies()) {
-                                        System.out.println(cookie.getName() + " : " + cookie.getValue());
-                                    }
-                                }
                                 if (null != request.getAttribute("failMessage")) {
                                     out.println(request.getAttribute("failMessage"));
                                 }
                             %>
-                        </center>
-                        <%--<form method="post" action="#">--%>
-                        <table cellspacing="0" class="shop_table cart" id="cartTable">
-                            <thead>
+                            <thead id="thead">
                             <tr>
                                 <th class="product-remove">&nbsp;</th>
                                 <th class="product-thumbnail">&nbsp;</th>
@@ -274,6 +273,7 @@
 
                             <tr>
                                 <td class="actions" colspan="6">
+                                    <center><div id="actions"></div></center>
                                     <input type="submit" value="Обнови количката" name="update_cart"
                                            class="button" onclick="getValues('/ShoppingCartServlet')">
                                     <input type="submit" value="Поръчай" name="proceed"
@@ -330,7 +330,6 @@
 </div>
 
 <div class="footer-top-area">
-    <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-3 col-sm-6">
@@ -427,12 +426,6 @@
     }
 </script>
 <script>
-    function refreshPage() {
-        alert("Поръчката е направена успешно!");
-        location.reload();
-    }
-</script>
-<script>
     function order(url) {
 
         var data = [];
@@ -457,8 +450,12 @@
                 if (request.status === 200) {
                     document.getElementById("cartTable").innerHTML = this.responseText;
 
-                } else {
-                    alert("omaza sa");
+                } else if (request.status == 404) {
+                    document.getElementById("actions").innerHTML = "Няма толкова налични бройки!"
+                }
+
+                else {
+                    location.href="/login.jsp";
                 }
             }
         };

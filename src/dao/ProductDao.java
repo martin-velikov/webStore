@@ -3,6 +3,7 @@ package dao;
 import model.Category;
 import model.products.Product;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
@@ -92,6 +93,8 @@ public class ProductDao extends BaseDao<Product> {
         newProcuct.setProduct_model(product.getProduct_model());
         newProcuct.setProduct_description(product.getProduct_description());
         newProcuct.setProduct_price(product.getProduct_price());
+        newProcuct.setProduct_image(product.getProduct_image());
+        newProcuct.setProduct_quantity(product.getProduct_quantity());
         Category category = new Category();
         category.setCategory_name(product.getCategory().getCategory_name());
         newProcuct.setCategory(category);
@@ -126,5 +129,18 @@ public class ProductDao extends BaseDao<Product> {
         Query query = session.createQuery("FROM Product item WHERE item.category.category_name = (:categoryName)");
         query.setParameter("categoryName", categoryName);
         return getProductList(query, session);
+    }
+
+    public void updateProduct(Integer newQuantity, long id) {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        String hqlUpdate = "update Product product set product.product_quantity = :newQuantity where product.id_product = :id";
+
+        int updatedEntities = session.createQuery( hqlUpdate )
+                .setInteger( "newQuantity", newQuantity )
+                .setLong( "id", id )
+                .executeUpdate();
+        tx.commit();
+        session.close();
     }
 }
