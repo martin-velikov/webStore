@@ -122,6 +122,9 @@
         <div class="container">
             <div class="form-container form-container--small">
                 <%
+                    if (null != request.getAttribute("successMessage")) {
+                        out.println(request.getAttribute("successMessage"));
+                    }
                     if (null != request.getAttribute("failMessage")) {
                         out.println(request.getAttribute("failMessage"));
                     }

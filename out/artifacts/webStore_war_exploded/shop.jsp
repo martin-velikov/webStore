@@ -188,9 +188,9 @@
                       <ul>
                           <li><a href="categories.jsp">Настолни компютри</a></li>
                           <li><a href="categories.jsp">Лаптопи</a></li>
-                          <li><a href="categories.jsp">Ъпгрейд</a></li>
+                          <li><a href="categories.jsp">Компоненти</a></li>
                           <li><a href="categories.jsp">Периферия</a></li>
-                          <li><a href="categories.jsp">Wireless and Networking</a></li>
+                          <li><a href="categories.jsp">Мрежови компоненти</a></li>
                       </ul>
                   </div>
               </div>
@@ -225,7 +225,7 @@
    
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
-    
+
     <!-- Bootstrap JS form CDN -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     

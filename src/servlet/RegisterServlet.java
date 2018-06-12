@@ -32,55 +32,36 @@ public class RegisterServlet extends HttpServlet {
 
         UserDao userDao = UserDao.getInstance();
 
-        if (checkInfo(fName,fNamePattern)==true) {
-            if (checkInfo(lName,lNamePattern)==true){
-                if (checkInfo(phone,phonePattern)==true){
-                    if (checkInfo(email,emailPattern)==true){
-                        if (password.length() >= 8) {
-                            try {
-                                User user = userDao.getUser(email);
-                                request.setAttribute("failMessage", "Потребител с такъв email вече съществува!");
-                                rd.forward(request, response);
-
-                            } catch(Exception e) {
-                                User user = new User();
-                                    user.setFirst_name(fName);
-                                    user.setLast_name(lName);
-                                    user.setPhone(phone);
-                                    user.setAddress(address);
-                                    user.setEmail(email);
-                                    user.setPassword(password);
-                                    user.setPicture(request.getParameter("picture"));
-
-                                    if(userDao.insert(user) != null){
-                                        request.setAttribute("successMessage", "Успешна регистрация!");
-                                        rd.forward(request, response);
-                                    }else{
-                                        request.setAttribute("failMessage", "Грешка при създаване на нов акаунт!");
-                                        rd.forward(request, response);
-                                    }
-                                }
-                            } else {
-                            request.setAttribute("failMessage", "Паролата трябва да е минимум 8 символа!");
-                            rd.forward(request, response);
-                        }
-                        }
-                        else {
-                            request.setAttribute("failMessage", "Моля, въведете данните си правилно!");
-                            rd.forward(request, response);
-                        }
-                    }        else {
-                        request.setAttribute("failMessage", "Моля, въведете данните си правилно!");
-                        rd.forward(request, response);
-                    }
-                }        else {
-                    request.setAttribute("failMessage", "Моля, въведете данните си правилно!");
+        if (checkInfo(fName,fNamePattern) && checkInfo(lName,lNamePattern) && checkInfo(phone,phonePattern) && checkInfo(email,emailPattern) && password.length() >= 8) {
+                try {
+                    User user = userDao.getUser(email);
+                    request.setAttribute("failMessage", "Потребител с такъв email вече съществува!");
                     rd.forward(request, response);
-                }
-            }        else {
-                request.setAttribute("failMessage", "Моля, въведете данните си правилно!");
-                rd.forward(request, response);
-            }
+
+                } catch(Exception e) {
+                    User user = new User();
+                    user.setFirst_name(fName);
+                    user.setLast_name(lName);
+                    user.setPhone(phone);
+                    user.setAddress(address);
+                    user.setEmail(email);
+                    user.setPassword(password);
+                    user.setPicture(request.getParameter("picture"));
+
+                    if(userDao.insert(user) != null){
+                        rd = request.getRequestDispatcher("login.jsp");
+                        request.setAttribute("successMessage", "Успешна регистрация!");
+                        rd.forward(request, response);
+                    } else {
+                        request.setAttribute("failMessage", "Грешка при създаване на нов акаунт!");
+                        rd.forward(request, response);
+                        }
+                    }
+            } else {
+            request.setAttribute("failMessage", "Моля, въведете данните си правилно!");
+            rd.forward(request, response);
+        }
+
         }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

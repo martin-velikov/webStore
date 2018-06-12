@@ -4,6 +4,7 @@ import dao.BaseDao;
 import dao.UserDao;
 import model.User;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,14 @@ public class UpdateUserServlet extends HttpServlet {
         user.setEmail(email);
         user.setAddress(address);
         user.setPhone(phone);
+
+        UserDao userDao = UserDao.getInstance();
+        userDao.update(user);
+
+
+        RequestDispatcher rd = request.getRequestDispatcher("/user.jsp");
+        request.setAttribute("Success","Промяната е изпълнена успешно!");
+        rd.forward(request,response);
 
     }
 

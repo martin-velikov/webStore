@@ -122,7 +122,7 @@
 								Nvidia GeForce <span class="primary">1080 <strong>Ti</strong></span>
 							</h2>
 							<h4 class="caption subtitle">11GB GDDR5X</h4>
-							<a class="caption button-radius" href="#"><span class="icon"></span>Грабни сега !</a>
+							<a class="caption button-radius" onclick="singleProduct(20);"><span class="icon"></span>Грабни сега !</a>
 						</div>
 					</li>
 					<li><img src="/img/h4-slide2.jpg" alt="Slide">
@@ -130,7 +130,7 @@
 							<h2 class="caption title">
 								GB Z270X-GAMING 8 <span class="primary">LGA1151 </span>
 							</h2>
-							<a class="caption button-radius" href="#"><span class="icon"></span>Грабни сега !</a>
+							<a class="caption button-radius" onclick="singleProduct(22);"><span class="icon"></span>Грабни сега !</a>
 						</div>
 					</li>
 					<li><img src="/img/h4-slide3.jpg" alt="Slide">
@@ -139,7 +139,7 @@
 								Intel <span class="primary">Core <strong>i5</strong></span>
 							</h2>
 							<h4 class="caption subtitle">6-ядрен</h4>
-							<a class="caption button-radius" href="#"><span class="icon"></span>Грабни сега !</a>
+							<a class="caption button-radius" onclick="singleProduct(21);"><span class="icon"></span>Грабни сега !</a>
 						</div>
 					</li>
 					<li><img src="/img/h4-slide4.jpg" alt="Slide">
@@ -148,7 +148,7 @@
 								Redragon  <span class="primary">Devarajas <strong>K556-RK RGB</strong></span>
 							</h2>
 							<h4 class="caption subtitle">Механична клавиатура с RGB подсветка</h4>
-							<a class="caption button-radius" href="#"><span class="icon"></span>Грабни сега !</a>
+							<a class="caption button-radius" onclick="singleProduct(23);"><span class="icon"></span>Грабни сега !</a>
 						</div>
 					</li>
 				</ul>
@@ -286,9 +286,9 @@
                         <ul>
                             <li><a href="categories.jsp">Настолни компютри</a></li>
                             <li><a href="categories.jsp">Лаптопи</a></li>
-                            <li><a href="categories.jsp">Ъпгрейд</a></li>
+                            <li><a href="categories.jsp">Компоненти</a></li>
                             <li><a href="categories.jsp">Периферия</a></li>
-                            <li><a href="categories.jsp">Wireless and Networking</a></li>
+                            <li><a href="categories.jsp">Мрежови компоненти</a></li>
                         </ul>                        
                     </div>
                 </div>

@@ -32,6 +32,10 @@
     <%-- Other--%>
     <script type="text/javascript" src="/js/mainFunctionality.js"></script>
 
+    <style>
+        input[type="text"], input[type="password"], input[type="email"], textarea { width: 50%; }
+    </style>
+
 </head>
 <body onload="getCartData();">
 

@@ -15,4 +15,5 @@ public class OrderDao extends BaseDao<Order> {
         }
         return instance;
     }
+
 }

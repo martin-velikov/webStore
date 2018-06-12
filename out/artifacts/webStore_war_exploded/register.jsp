@@ -143,7 +143,7 @@
                     <label for="email">Email:</label><br>
                     <input id="email" type="text" class="form-control" placeholder="Моля, въведете вашият Email" name="email" required><br>
                     <label for="password">Парола:</label><br>
-                    <input id="password" type="password" class="form-control" placeholder="Моля, въведете вашата парола(минимум 8 символа)" name="password" required>
+                    <input id="password" type="password" class="form-control" placeholder="(минимум 8 символа)" name="password" required>
                     <label for="picture">Профилна снимка (не е задължително):</label><br>
                     <input id="picture" type="file" name="pic" accept="image/*" class="form-control" name="picture">
                     <input type="submit" class="btn-primary" value="Регистрирай" name="">
@@ -189,9 +189,9 @@
                       <ul>
                           <li><a href="categories.jsp">Настолни компютри</a></li>
                           <li><a href="categories.jsp">Лаптопи</a></li>
-                          <li><a href="categories.jsp">Ъпгрейд</a></li>
+                          <li><a href="categories.jsp">Компоненти</a></li>
                           <li><a href="categories.jsp">Периферия</a></li>
-                          <li><a href="categories.jsp">Wireless and Networking</a></li>
+                          <li><a href="categories.jsp">Мрежови компоненти</a></li>
                       </ul>
                   </div>
               </div>

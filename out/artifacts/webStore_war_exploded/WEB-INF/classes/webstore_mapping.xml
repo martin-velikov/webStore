@@ -32,8 +32,8 @@
 
     <class name="model.Category" table="category">
         <id name="id_category">
-            <generator class="increment"></generator>
-        </id>
+        <generator class="increment"></generator>
+    </id>
 
         <property name="category_name"></property>
     </class>

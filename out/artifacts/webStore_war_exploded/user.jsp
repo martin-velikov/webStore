@@ -32,6 +32,10 @@
     <%-- Other--%>
     <script type="text/javascript" src="/js/mainFunctionality.js"></script>
 
+    <style>
+        input[type="text"], input[type="password"], input[type="email"], textarea { width: 50%; }
+    </style>
+
 </head>
 <body onload="getCartData();">
 
@@ -183,11 +187,11 @@
                 <div class="footer-menu">
                     <h2 class="footer-wid-title">Категории</h2>
                     <ul>
-                        <li><a href="#">Настолни компютри</a></li>
-                        <li><a href="#">Лаптопи</a></li>
-                        <li><a href="#">Ъпгрейд</a></li>
-                        <li><a href="#">Периферия</a></li>
-                        <li><a href="#">Wireless and Networking</a></li>
+                        <li><a href="categories.jsp">Настолни компютри</a></li>
+                        <li><a href="categories.jsp">Лаптопи</a></li>
+                        <li><a href="categories.jsp">Компоненти</a></li>
+                        <li><a href="categories.jsp">Периферия</a></li>
+                        <li><a href="categories.jsp">Мрежови компоненти</a></li>
                     </ul>
                 </div>
             </div>

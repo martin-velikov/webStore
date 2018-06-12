@@ -59,6 +59,6 @@ public class SingleProductServlet extends HttpServlet {
     }
 
     static class Response{
-         int productId;
+        int productId;
     }
 }

@@ -12,6 +12,7 @@
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <!--<property name="show_sql">true</property>-->
         <!--<property name="format_sql">true</property>-->
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
         <mapping resource="webstore_mapping.xml"/>
     </session-factory>
 </hibernate-configuration>

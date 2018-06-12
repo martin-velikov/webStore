@@ -1,6 +1,11 @@
 <%@ page import="dao.CategoryDao" %>
 <%@ page import="model.Category" %>
 <%@ page import="model.User" %>
+<%@ page import="dao.OrderDao" %>
+<%@ page import="model.orders.Order" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.orders.OrderItem" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,6 +31,12 @@
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
+
+      <style>
+          .orderTable { margin: 0 auto; }
+          .orderTable td { padding-bottom: 10px;  width: 200px; }
+          .orderTable th { text-align:center; padding-bottom:10px; }
+      </style>
 
   </head>
   <body onload="getCartData()">
@@ -103,22 +114,61 @@
     <div class="single-product-area" style="text-align: center;">
         
         <div class="container">
+            <%
+                if(null!=request.getAttribute("successMessage"))
+                {
+                    out.println(request.getAttribute("successMessage"));
+                }
+                if(null!=request.getAttribute("failMessage"))
+                {
+                    out.println(request.getAttribute("failMessage"));
+                }
+            %>
+            <br>
             <div class="form-container">
-                <h4>Моля изберете:</h4>
+                <h4>Контролен панел:</h4>
+                <table class="orderTable">
+                    <tr>
+                        <th class="product-subtotal">Имена</th>
+                        <th class="product-subtotal">Телефон за връзка</th>
+                        <th class="product-subtotal">Дата на поръчката</th>
+                        <th class="product-subtotal">Стойност</th>
+                        <th class="product-subtotal">Статус</th>
+                        <th class="product-subtotal">Действия</th>
+                    </tr>
+                    <%  double price = 0;
+                        OrderDao orderDao = OrderDao.getInstance();
+                        for (Order order : orderDao.getAllEntities("Order")) {
+                            if (order.getStatus().equals("Приета поръчка")) {
+                                for (OrderItem orderItem : order.getOrderItems()){
+                                    price += orderItem.getPrice();
+                                }
+                                out.println("<form action=\"UpdateOrderServlet\" method=\"post\">" +
+                                        "<tr><td>" + order.getUser().getFirst_name() + " " + order.getUser().getLast_name() + "</td>"
+                                        + "<td>" + order.getUser().getPhone() + "</td>"
+                                        + "<td>" + order.getDate().toString().substring(0,order.getDate().toString().length()-2) + "</td>"
+                                        + "<td>" + price + " лв</td>"
+                                        + "<td>" + "<select id=\"orderStatus\" name=\"orderStatus\">"
+                                        + "<option>" +order.getStatus() +"</option>"
+                                        + "<option>" + "Изпълнена поръчка" + "</option>"
+                                        + "<option>" + "Отменена поръчка"+ "</option>"
+                                        + "</select>"
+                                        +"</td>"+
+                                        "<input type=\"hidden\" name=\"orderId\" value=\""+order.getId_order()+"\">"
+                                        + "<td>" + "<button class=\"add_to_cart_button\" onclick=\"updateOrder("+order.getId_order()+")\">Обнови статус</button>" + "</td></tr></form>");
+                                price = 0;
+                            }
+
+                        }
+
+                    %>
+                </table>
+                <br>
                 <div class="actions">
-                <input type="button" id="addProduct" class="btn-primary" value="Добавяне на продукт" name="">
+                <input type="button" id="addProduct" class="add_to_cart_button" style="margin-bottom: 40px;" value="Добавяне на продукт" name="">
 
                     <form action="ProductServlet" method="POST" class="login-form" id="addForm" style="display: none;">
-                        <%
-                            if(null!=request.getAttribute("successMessage"))
-                            {
-                                out.println(request.getAttribute("successMessage"));
-                            }
-                            if(null!=request.getAttribute("failMessage"))
-                            {
-                                out.println(request.getAttribute("failMessage"));
-                            }
-                        %>
+
                         <div class="col-md-6">
                             <div class="form-select">
                                 <label for="selectCategory">Моля, изберете категория:</label>
@@ -175,15 +225,7 @@
 
 
                     </form>
-                <input type="button" id="alterProduct" class="btn-primary" value="Промяна на продукт" name="">
                 </div><!-- /.actions -->
-                <%--<form action="?" method="post" class="login-form" id="addForm">--%>
-               <%--<label for="email">Email:</label><br>--%>
-                    <%--<input type="text" class="form-control" placeholder="Моля, въведете вашият Email"><br>--%>
-                    <%--<label for="password">Парола:</label><br>--%>
-                    <%--<input type="password" class="form-control" placeholder="Моля, въведете вашата парола">--%>
-                    <%--<input type="submit" class="btn-primary" value="Вход" name=""> --%>
-                <%--</form>--%>
             </div><!-- /.form-container -->
         </div>
     </div>
@@ -287,5 +329,13 @@
 
     <%-- Other--%>
     <script type="text/javascript" src="/js/mainFunctionality.js"></script>
+  <script>
+      function updateOrder(orderId) {
+          var orderStatus = document.getElementById("orderStatus");
+          var request = new XMLHttpRequest();
+          request.open("post", "/UpdateOrderServlet", true);
+          request.send(JSON.stringify({orderId: orderId, orderStatus: orderStatus}));
+      }
+  </script>
   </body>
 </html>

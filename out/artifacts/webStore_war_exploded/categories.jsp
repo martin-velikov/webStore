@@ -195,9 +195,9 @@
                     <ul>
                         <li><a href="categories.jsp">Настолни компютри</a></li>
                         <li><a href="categories.jsp">Лаптопи</a></li>
-                        <li><a href="categories.jsp">Ъпгрейд</a></li>
+                        <li><a href="categories.jsp">Компоненти</a></li>
                         <li><a href="categories.jsp">Периферия</a></li>
-                        <li><a href="categories.jsp">Wireless and Networking</a></li>
+                        <li><a href="categories.jsp">Мрежови компоненти</a></li>
                     </ul>
                 </div>
             </div>
