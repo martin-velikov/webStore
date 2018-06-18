@@ -22,7 +22,6 @@ public class RegisterServlet extends HttpServlet {
         String phonePattern = "(359|0)8\\d{2}\\s?\\d{3}\\s?\\d{3}";
         String emailPattern = "\\w+?@\\w+?\\.\\w\\w\\w?";
 
-
         String fName = request.getParameter("first_name");
         String lName = request.getParameter("last_name");
         String phone = request.getParameter("phone");
@@ -60,8 +59,7 @@ public class RegisterServlet extends HttpServlet {
             } else {
             request.setAttribute("failMessage", "Моля, въведете данните си правилно!");
             rd.forward(request, response);
-        }
-
+            }
         }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

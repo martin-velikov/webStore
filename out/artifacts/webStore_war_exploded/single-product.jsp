@@ -60,7 +60,7 @@
                     <ul class="list-unstyled list-inline">
                         <%
                             if(user != null){
-                                out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравей, " + user.getFirst_name()+"</a></li>" +
+                                out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравейте, " + user.getFirst_name()+"</a></li>" +
                                         "<li><a onclick=\"logout();\" style=\"cursor: pointer;\">Изход от акаунт</a></li>");
                             } else {
                                 out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");
@@ -160,7 +160,9 @@
                             "                                    <input type=\"text\" id=\"alterDescription\" name=\"alterDescription\">\n" +
                             "                                    <input type=\"hidden\" id=\"idProduct\" name=\"idProduct\" >\n" +
                             "                                    <input type=\"submit\" class=\"add_to_cart_button\" value=\"Промени продукт\">\n" +
-                                                                    "<input type=\"button\" class=\"add_to_cart_button\" style=\"float:right\" onclick=\"DeleteProductServlet\" value=\"Изтрий продукт\" >"+
+                                                                 "<input type=\"hidden\" id=\"alterCategory\" name=\"alterCategory\">\n" +
+                            "                                     <input type=\"hidden\" id=\"alterImage\" name=\"alterImage\">  "+
+                                                                    "<input type=\"submit\" class=\"add_to_cart_button\" style=\"float:right\" onclick=\"form.action='DeleteProductServlet'\" value=\"Изтрий продукт\">"+
                             "                                </form>");
                 }
             } %>
@@ -412,10 +414,12 @@
                         document.getElementById("alterDescription").value = productData.product_description;
                         document.getElementById("alterQuantity").value = productData.product_quantity;
                         document.getElementById("idProduct").value = productData.id_product;
+                        document.getElementById("alterCategory").value = productData.category.category_name;
+                        document.getElementById("alterImage").value = productData.product_image;
                     }
 
                 } else {
-                    alert("omaza sa");
+                    alert("Няма такъв продукт");
                 }
             }
         };

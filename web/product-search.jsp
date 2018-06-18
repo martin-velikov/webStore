@@ -131,7 +131,7 @@
                       <ul class="list-unstyled list-inline">
                           <%
                               if(user != null){
-                                  out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравей, " + user.getFirst_name()+"</a></li>" +
+                                  out.println("<li><a href=\"user.jsp\"><i class=\"fa fa-user\"></i>Здравейте, " + user.getFirst_name()+"</a></li>" +
                                           "<li><a onclick=\"logout();\" style=\"cursor: pointer;\">Изход от акаунт</a></li>");
                               } else {
                                   out.println("<li><a href=\"login.jsp\"><i class=\"fa fa-user\"></i> Влез в акаунт</a></li>");

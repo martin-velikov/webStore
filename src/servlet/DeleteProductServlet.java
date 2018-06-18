@@ -19,13 +19,12 @@ import java.io.IOException;
 @WebServlet("/DeleteProductServlet")
 public class DeleteProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int idProduct = Integer.parseInt(request.getParameter("idProduct"));
-
+        Long idProduct = Long.parseLong(request.getParameter("idProduct"));
 
         ProductDao productDao = ProductDao.getInstance();
 
         productDao.delete(Product.class,productDao.getProductById(idProduct).getId_product());
-        RequestDispatcher rd = request.getRequestDispatcher("/single-product.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/shop.jsp");
         request.setAttribute("Success", "Продуктът е изтрит успешно!");
         rd.forward(request, response);
     }

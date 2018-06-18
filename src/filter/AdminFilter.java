@@ -20,7 +20,7 @@ public class AdminFilter implements Filter {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("User");
-        if (session==null || !user.getEmail().equals("admin@admin.ad")) {
+        if (user==null || !user.getEmail().equals("admin@admin.ad")) {
             request.getRequestDispatcher("/index.jsp").forward(request,response);
         }
             chain.doFilter(req, resp);
