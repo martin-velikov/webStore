@@ -133,22 +133,21 @@
                 %>
                 <form action="RegisterServlet" method="POST" class="login-form">
                     <label for="first_name">Име:</label><br>
-                    <input id="first_name" type="text" class="form-control" placeholder="Моля, въведете вашето име" name="first_name" required><br>
+                    <input id="first_name" type="text" class="form-control" placeholder="Моля, въведете вашето име" name="first_name" pattern="[A-Z\u0400-\u04FFa-z\u0400-\u04FF]{2,20}" title="Името трябва да е между 2 и 20 букви" required><br>
                     <label for="last_name">Фамилия:</label><br>
-                    <input id="last_name" type="text" class="form-control" placeholder="Моля, въведете вашaтa фамилия" name="last_name" required><br>
+                    <input id="last_name" type="text" class="form-control" placeholder="Моля, въведете вашaтa фамилия" name="last_name" pattern="[A-Z\u0400-\u04FFa-z\u0400-\u04FF]{2,20}" title="Името трябва да е между 2 и 20 букви" required><br>
                     <label id="phone" for="phone">Телефон:</label><br>
-                    <input type="text" class="form-control" placeholder="Моля, въведете вашият телефонен номер" name="phone" required><br>
+                    <input type="text" class="form-control" placeholder="Моля, въведете вашият телефонен номер" name="phone" pattern="(359|0)8\d{2}\s?\d{3}\s?\d{3}" title="Неправилен формат на телефонен номер" required><br>
                     <label for="address">Адрес:</label><br>
-                    <input id="address" type="text" class="form-control" placeholder="Моля, въведете вашият адрес" name="address" required><br>
+                    <input id="address" type="text" class="form-control" placeholder="Моля, въведете вашият адрес" name="address" pattern="{10,120}" title="Твърде кратък и/или неточен адрес" required><br>
                     <label for="email">Email:</label><br>
-                    <input id="email" type="text" class="form-control" placeholder="Моля, въведете вашият Email" name="email" required><br>
+                    <input id="email" type="text" class="form-control" placeholder="Моля, въведете вашият Email" name="email" pattern="\w+?@\w+?\.\w\w\w?" title="Невалиден формат на email адрес" required><br>
                     <label for="password">Парола:</label><br>
-                    <input id="password" type="password" class="form-control" placeholder="(минимум 8 символа)" name="password" required>
+                    <input id="password" type="password" class="form-control" placeholder="(минимум 8 символа)" pattern=".{8,}" name="password" title="Паролата трябва да е минимум 8 символа" required>
                     <label for="picture">Профилна снимка (не е задължително):</label><br>
                     <input id="picture" type="file" name="pic" accept="image/*" class="form-control" name="picture">
                     <input type="submit" class="btn-primary" value="Регистрирай" name="">
                     <br>
-
                 </form>
             </div><!-- /.form-container -->
         </div>

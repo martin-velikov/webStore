@@ -34,6 +34,7 @@
 
       <style>
           .orderTable { margin: 0 auto; }
+          .orderTable button { width: 150px; height: 35px; }
           .orderTable td { padding-bottom: 10px;  width: 200px; }
           .orderTable th { text-align:center; padding-bottom:10px; }
       </style>
@@ -132,6 +133,7 @@
                         <th class="product-subtotal">Имена</th>
                         <th class="product-subtotal">Телефон за връзка</th>
                         <th class="product-subtotal">Дата на поръчката</th>
+                        <th class="product-subtotal">Поръчани продукти</th>
                         <th class="product-subtotal">Стойност</th>
                         <th class="product-subtotal">Статус</th>
                         <th class="product-subtotal">Действия</th>
@@ -140,25 +142,26 @@
                         OrderDao orderDao = OrderDao.getInstance();
                         for (Order order : orderDao.getAllEntities("Order")) {
                             if (order.getStatus().equals("Приета поръчка")) {
-                                for (OrderItem orderItem : order.getOrderItems()){
+                                for (OrderItem orderItem : order.getOrderItems()) {
                                     price += orderItem.getPrice();
-                                }
-                                out.println("<form action=\"UpdateOrderServlet\" method=\"post\">" +
-                                        "<tr><td>" + order.getUser().getFirst_name() + " " + order.getUser().getLast_name() + "</td>"
-                                        + "<td>" + order.getUser().getPhone() + "</td>"
-                                        + "<td>" + order.getDate().toString().substring(0,order.getDate().toString().length()-2) + "</td>"
-                                        + "<td>" + price + " лв</td>"
-                                        + "<td>" + "<select id=\"orderStatus\" name=\"orderStatus\">"
-                                        + "<option>" +order.getStatus() +"</option>"
-                                        + "<option>" + "Изпълнена поръчка" + "</option>"
-                                        + "<option>" + "Отменена поръчка"+ "</option>"
-                                        + "</select>"
-                                        +"</td>"+
-                                        "<input type=\"hidden\" name=\"orderId\" value=\""+order.getId_order()+"\">"
-                                        + "<td>" + "<button class=\"add_to_cart_button\" onclick=\"updateOrder("+order.getId_order()+")\">Обнови статус</button>" + "</td></tr></form>");
-                                price = 0;
-                            }
 
+                                    out.println("<form action=\"UpdateOrderServlet\" method=\"post\">" +
+                                            "<tr><td>" + order.getUser().getFirst_name() + " " + order.getUser().getLast_name() + "</td>"
+                                            + "<td>" + order.getUser().getPhone() + "</td>"
+                                            + "<td>" + order.getDate().toString().substring(0, order.getDate().toString().length() - 2) + "</td>"
+                                            + "<td>" + orderItem.getProduct().getProduct_brand() +" "+ orderItem.getProduct().getProduct_model() +"</td>"
+                                            + "<td>" + price + " лв</td>"
+                                            + "<td>" + "<select id=\"orderStatus\" name=\"orderStatus\">"
+                                            + "<option>" + order.getStatus() + "</option>"
+                                            + "<option>" + "Изпълнена поръчка" + "</option>"
+                                            + "<option>" + "Отменена поръчка" + "</option>"
+                                            + "</select>"
+                                            + "</td>" +
+                                            "<input type=\"hidden\" name=\"orderId\" value=\"" + order.getId_order() + "\">"
+                                            + "<td>" + "<button class=\"add_to_cart_button\" onclick=\"updateOrder(" + order.getId_order() + ")\">Обнови статус</button>" + "</td></tr></form>");
+                                    price = 0;
+                                }
+                            }
                         }
 
                     %>

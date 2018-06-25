@@ -102,6 +102,7 @@ public class ProductDao extends BaseDao<Product> {
     }
 
     public List<Product> getSearchProduct(String search) {
+        search = "%" + search + "%";
        Session session = factory.openSession();
         Query query = session.createQuery("FROM Product item WHERE item.product_brand like (:search) or item.product_model LIKE (:search)");
         query.setParameter("search", search);

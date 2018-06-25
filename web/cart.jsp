@@ -73,6 +73,32 @@
         }
     </script>
 
+    <script>
+        function getValues(url) {
+
+            var idArray = [];
+            var quantityArray = [];
+            var table = document.getElementById("cartTable");
+            var rCount = table.rows.length;
+            for (var i = 1; i < rCount - 1; i++) {
+                var quantity = table.rows[i].cells[4].children[0].value;
+                var id = table.rows[i].cells[5].children[0].value;
+
+                idArray.push(id);
+                quantityArray.push(quantity);
+            }
+            $.ajax({
+                url: url,
+                data: {
+                    ids: idArray,
+                    quantities: quantityArray,
+                    shouldAlter: true
+                },
+                type: 'POST'
+            });
+        }
+    </script>
+
     <%-- Other--%>
     <script type="text/javascript" src="/js/mainFunctionality.js"></script>
 
@@ -400,31 +426,7 @@
 </div> <!-- End footer bottom area -->
 
 
-<script>
-    function getValues(url) {
 
-        var idArray = [];
-        var quantityArray = [];
-        var table = document.getElementById("cartTable");
-        var rCount = table.rows.length;
-        for (var i = 1; i < rCount - 1; i++) {
-            var quantity = table.rows[i].cells[4].children[0].value;
-            var id = table.rows[i].cells[5].children[0].value;
-            //TODO put these values in arrays and call the ShoppingCardServlet
-            idArray.push(id);
-            quantityArray.push(quantity);
-        }
-        $.ajax({
-            url: url,
-            data: {
-                ids: idArray,
-                quantities: quantityArray,
-                shouldAlter: true
-            },
-            type: 'POST'
-        });
-    }
-</script>
 <script>
     function order(url) {
 
@@ -439,7 +441,7 @@
                 id: id
             });
         }
-        //TODO if data is empty don't send the request
+
         if(data.length == 0){
             return;
         }

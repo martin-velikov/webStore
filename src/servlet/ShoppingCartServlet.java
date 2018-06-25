@@ -20,6 +20,7 @@ import java.util.List;
 @WebServlet("/ShoppingCartServlet")
 public class ShoppingCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String[] idsArray = request.getParameterValues("ids[]");
         String[] quantitiesArray = request.getParameterValues("quantities[]");
         String shouldAlter = request.getParameter("shouldAlter");

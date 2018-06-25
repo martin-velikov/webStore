@@ -2,6 +2,7 @@ package servlet;
 
 import dao.UserDao;
 import model.User;
+import util.PasswordEncryptor;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.regex.Pattern;
+import java.security.NoSuchAlgorithmException;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -28,6 +29,11 @@ public class RegisterServlet extends HttpServlet {
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        try {
+            password = PasswordEncryptor.encrypt(password);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         UserDao userDao = UserDao.getInstance();
 
